@@ -9,8 +9,6 @@ using Lambda;
 
 class HeapsScript
 {
-    public static var extensions:Array<String> = [];
-
     static var world(default, null):Environment;
 
     public static function loadScripts()
@@ -23,7 +21,7 @@ class HeapsScript
 
         for (file in Res.loader.dir(''))
         {
-            if (!extensions.contains(file.entry.extension)) continue;
+            if (!HeapsMod.config.scriptExts.contains(file.entry.extension)) continue;
 
             world.addModule(new HeapsModule(file.entry));
         }

@@ -54,14 +54,14 @@ class HeapsMod
         config.skipDependencyErrors ??= false;
         config.mods ??= [];
 
+        #if hxscript
+        config.scriptExts ??= DEFAULT_SCRIPT_EXTS;
+        #end
+
         onError = config.onError;
         mods = [];
 
         HeapsMod.config = config;
-
-        #if hxscript
-        HeapsScript.extensions = config.scriptExts ?? DEFAULT_SCRIPT_EXTS;
-        #end
 
         Res.loader = new Loader(new HeapsModFS(Res.loader.fs));
 
