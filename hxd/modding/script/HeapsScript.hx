@@ -1,6 +1,7 @@
 package hxd.modding.script;
 
 #if hxscript
+import hxscript.error.Sink;
 import hxscript.types.ScriptedClass;
 import hxscript.Config;
 import hxscript.Environment;
@@ -18,6 +19,8 @@ class HeapsScript
         clearScripts();
 
         world = new Environment();
+
+        Sink.listen(e -> HeapsMod.error(ERROR, SCRIPT_ERROR, e.message));
 
         for (file in Res.loader.dir(''))
         {
@@ -42,7 +45,7 @@ class HeapsScript
                 if (type is ScriptedClass)
                 {
                     var cls:ScriptedClass = cast type;
-                    var native:Dynamic = try { cls.instanceClass; } catch(e) null;
+                    var native:Dynamic = try { cls.instanceClass; } catch (e) null;
 
                     while (native != null)
                     {
@@ -113,6 +116,8 @@ class HeapsScript
     public static function clearScripts()
     {
         world = null;
+
+        Sink.onDiagnostic = [];
     }
 }
 #end
