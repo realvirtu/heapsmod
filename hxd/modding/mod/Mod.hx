@@ -30,7 +30,7 @@ class Mod
         HeapsModFS.instance.fs.insert(0, fs = new ModFS(this));
 
         #if hxscript
-        if (hasPreprocessor) HeapsScript.setPreprocessor(preprocessor, '1');
+        if (hasPreprocessor) HeapsScript.setPreprocessor(preprocessor, Std.string(version));
         #end
     }
 
