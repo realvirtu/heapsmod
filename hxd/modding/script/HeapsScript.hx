@@ -80,7 +80,12 @@ class HeapsScript
     {
         if (!HeapsMod.initialized || cls == null) return null;
 
-        return try { cls.typeCreateInstance(args); } catch (e) null;
+        return try { cls.typeCreateInstance(args); } catch (e)
+        {
+            HeapsMod.error(ERROR, SCRIPT_ERROR, e.message);
+
+            null;
+        }
     }
 
     public static function initClassByName(name:String, args:Array<Dynamic>):Dynamic
