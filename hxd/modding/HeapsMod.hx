@@ -20,6 +20,7 @@ typedef HeapsModConfig = {
     ?skipDependencies:Bool,
     ?skipDependencyErrors:Bool,
     ?onError:HeapsModError->Void,
+    ?compat:Map<String, String>,
     ?mods:Array<String>,
     #if hxscript
     ?scriptExts:Array<String>,
@@ -52,6 +53,7 @@ class HeapsMod
         config.metaFile ??= DEFAULT_META_FILE;
         config.skipDependencies ??= false;
         config.skipDependencyErrors ??= false;
+        config.compat ??= [];
         config.mods ??= [];
 
         #if hxscript

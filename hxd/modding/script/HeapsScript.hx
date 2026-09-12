@@ -30,7 +30,7 @@ class HeapsScript
                 {
                     loadDir(file.entry.path);
 
-                    return;
+                    continue;
                 }
 
                 if (!HeapsMod.config.scriptExts.contains(file.entry.extension)) continue;
