@@ -22,12 +22,24 @@ class HeapsScript
 
         Sink.listen(e -> HeapsMod.error(ERROR, SCRIPT_ERROR, e.message));
 
-        for (file in Res.loader.dir(''))
+        function loadDir(path:String)
         {
-            if (!HeapsMod.config.scriptExts.contains(file.entry.extension)) continue;
+            for (file in Res.loader.dir(path))
+            {
+                if (file.entry.isDirectory)
+                {
+                    loadDir(file.entry.path);
 
-            world.addModule(new HeapsModule(file.entry));
+                    return;
+                }
+
+                if (!HeapsMod.config.scriptExts.contains(file.entry.extension)) continue;
+
+                world.addModule(new HeapsModule(file.entry));
+            }
         }
+
+        loadDir('');        
 
         world.start();
     }
