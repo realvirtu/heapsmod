@@ -50,6 +50,7 @@ class HeapsMod
 
         initialized = true;
 
+        // Loads the config
         config ??= {};
         config.modRoot ??= DEFAULT_MOD_ROOT;
         config.metaFile ??= DEFAULT_META_FILE;
@@ -68,6 +69,7 @@ class HeapsMod
 
         HeapsMod.config = config;
 
+        // Loads a new resource loader
         Res.loader = new Loader(new HeapsModFS(Res.loader.fs));
 
         error(INFO, HEAPSMOD_INITIALIZED, 'HeapsMod initialized');
