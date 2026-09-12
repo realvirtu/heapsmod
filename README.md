@@ -40,7 +40,7 @@ import hxd.modding.script.HeapsScript;
 
 // Should be done before loading mods
 
-HeapsScript.addGlobalImport("package.Class");
+HeapsScript.setGlobalImport("package.Class");
 
 HeapsScript.blacklistClass("dangerous.package.DangerousClass");
 HeapsScript.blacklistPackage("dangerous.package");

@@ -88,13 +88,20 @@ class HeapsScript
         return initClass(listClasses().find(cls -> return cls.name == name), args);
     }
 
-    public static function addGlobalImport(path:String, ?alias:String)
+    public static function setGlobalImport(path:String, ?alias:String)
     {
         if (!HeapsMod.initialized) return;
 
         alias ??= path.substring(path.lastIndexOf('.') + 1);
 
         Config.globalImports.set(path, IAsName(alias));
+    }
+
+    public static function removeGlobalImport(path:String)
+    {
+        if (!HeapsMod.initialized) return;
+
+        Config.globalImports.remove(path);
     }
 
     public static function setPreprocessor(name:String, value:String)
