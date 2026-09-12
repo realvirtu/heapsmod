@@ -4,6 +4,7 @@ import haxe.io.Path;
 import hxd.fs.LocalFileSystem;
 
 using StringTools;
+using Lambda;
 
 class ModFS extends LocalFileSystem
 {
@@ -18,10 +19,16 @@ class ModFS extends LocalFileSystem
 
     override function open(path:String, check:Bool = true):LocalEntry
     {
+        if (path.startsWith('/')) path = path.substr(1);
+
+        // Skip excluded paths
+        if (HeapsMod.config.exclude.exists(exclude -> return path.startsWith(exclude))) return null;
+
         var entry:LocalEntry = super.open(path, check);
 
         if (entry != null) return entry;
 
+        // Check if the path can be converted for backwards compatibility
         for (oldPath => newPath in HeapsMod.config.compat)
         {
             if (path.startsWith(newPath))

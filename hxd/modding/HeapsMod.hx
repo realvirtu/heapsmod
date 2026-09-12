@@ -20,6 +20,7 @@ typedef HeapsModConfig = {
     ?skipDependencies:Bool,
     ?skipDependencyErrors:Bool,
     ?onError:HeapsModError->Void,
+    ?exclude:Array<String>,
     ?compat:Map<String, String>,
     ?mods:Array<String>,
     #if hxscript
@@ -31,6 +32,7 @@ class HeapsMod
 {
     static final DEFAULT_MOD_ROOT:String = 'mods';
     static final DEFAULT_META_FILE:String = 'meta.json';
+    static final DEFAULT_EXCLUDES:Array<String> = ['.vscode', '.git'];
     
     #if hxscript
     static final DEFAULT_SCRIPT_EXTS:Array<String> = ['hxc'];
@@ -53,6 +55,7 @@ class HeapsMod
         config.metaFile ??= DEFAULT_META_FILE;
         config.skipDependencies ??= false;
         config.skipDependencyErrors ??= false;
+        config.exclude ??= DEFAULT_EXCLUDES;
         config.compat ??= [];
         config.mods ??= [];
 
