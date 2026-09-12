@@ -64,7 +64,7 @@ class Mod
     @:noCompletion
     inline function get_id():String
     {
-        return meta.id;
+        return meta.id ?? '';
     }
 
     @:noCompletion
