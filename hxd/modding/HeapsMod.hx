@@ -1,8 +1,8 @@
 package hxd.modding;
 
 import hxd.modding.data.ModData;
-import hxd.modding.mod.DependencyUtil;
-import hxd.modding.mod.ModUtil;
+import hxd.modding.mod.util.DependencyUtil;
+import hxd.modding.mod.util.ModUtil;
 import hxd.modding.mod.Mod;
 import hxd.modding.HeapsModError;
 import hxd.res.Loader;

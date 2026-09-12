@@ -1,4 +1,4 @@
-package hxd.modding.mod;
+package hxd.modding.mod.util;
 
 import haxe.io.Path;
 import haxe.Json;
