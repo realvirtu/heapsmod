@@ -43,8 +43,6 @@ class Mod
     {
         HeapsModFS.instance.fs.remove(fs);
 
-        clearCache();
-
         fs.dispose();
 
         #if hxscript

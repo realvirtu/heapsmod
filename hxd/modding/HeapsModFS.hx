@@ -46,8 +46,8 @@ class HeapsModFS extends MultiFileSystem
         fs.remove(baseFS);
         
         modFS.dispose();
-        modFS = null;
         
+        modFS = null;
         baseFS = null;
 
         instance = null;

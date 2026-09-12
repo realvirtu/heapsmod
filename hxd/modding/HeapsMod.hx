@@ -192,8 +192,6 @@ class HeapsMod
         HeapsScript.clearScripts();
         #end
 
-        clearCache();
-
         initialized = false;
         mods = null;
 
