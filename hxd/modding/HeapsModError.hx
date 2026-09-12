@@ -15,6 +15,7 @@ enum ErrorType
     MOD_ENABLED;
     MOD_DISABLED;
     SCRIPT_INIT;
+    COMPAT_CONVERT_PATH;
 
     // WARNING
     MOD_MISSING_META;

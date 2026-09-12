@@ -32,6 +32,8 @@ class ModFS extends LocalFileSystem
             }
         }
 
+        if (entry != null) HeapsMod.error(INFO, COMPAT_CONVERT_PATH, 'Converted path ${entry.path} -> $path');
+
         return entry;
     }
 }
