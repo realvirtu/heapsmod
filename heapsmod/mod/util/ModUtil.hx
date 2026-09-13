@@ -1,8 +1,8 @@
-package hxd.modding.mod.util;
+package heapsmod.mod.util;
 
 import haxe.io.Path;
 import haxe.Json;
-import hxd.modding.data.ModData;
+import heapsmod.data.ModData;
 
 class ModUtil
 {

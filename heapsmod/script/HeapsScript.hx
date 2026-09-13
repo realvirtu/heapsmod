@@ -1,6 +1,7 @@
-package hxd.modding.script;
+package heapsmod.script;
 
 #if hxscript
+import hxd.Res;
 import hxscript.error.Sink;
 import hxscript.types.ScriptedClass;
 import hxscript.Config;

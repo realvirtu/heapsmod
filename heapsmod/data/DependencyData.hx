@@ -1,4 +1,4 @@
-package hxd.modding.data;
+package heapsmod.data;
 
 typedef DependencyData = {
     ?id:String,

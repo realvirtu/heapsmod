@@ -1,14 +1,15 @@
-package hxd.modding;
+package heapsmod;
 
-import hxd.modding.data.ModData;
-import hxd.modding.mod.util.DependencyUtil;
-import hxd.modding.mod.util.ModUtil;
-import hxd.modding.mod.Mod;
-import hxd.modding.HeapsModError;
+import heapsmod.data.ModData;
+import heapsmod.mod.util.DependencyUtil;
+import heapsmod.mod.util.ModUtil;
+import heapsmod.mod.Mod;
+import heapsmod.HeapsModError;
 import hxd.res.Loader;
+import hxd.Res;
 
 #if hxscript
-import hxd.modding.script.HeapsScript;
+import heapsmod.script.HeapsScript;
 #end
 
 using Lambda;

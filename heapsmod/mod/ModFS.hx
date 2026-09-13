@@ -1,4 +1,4 @@
-package hxd.modding.mod;
+package heapsmod.mod;
 
 import haxe.io.Path;
 import hxd.fs.LocalFileSystem;

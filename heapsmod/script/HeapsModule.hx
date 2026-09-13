@@ -1,4 +1,4 @@
-package hxd.modding.script;
+package heapsmod.script;
 
 #if hxscript
 import hxd.fs.FileEntry;

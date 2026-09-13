@@ -1,6 +1,6 @@
-package hxd.modding.mod.util;
+package heapsmod.mod.util;
 
-import hxd.modding.data.ModData;
+import heapsmod.data.ModData;
 
 using Lambda;
 

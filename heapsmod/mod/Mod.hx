@@ -1,9 +1,9 @@
-package hxd.modding.mod;
+package heapsmod.mod;
 
-import hxd.modding.data.ModData;
+import heapsmod.data.ModData;
 
 #if hxscript
-import hxd.modding.script.HeapsScript;
+import heapsmod.script.HeapsScript;
 #end
 
 using StringTools;

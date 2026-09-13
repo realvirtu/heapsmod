@@ -1,4 +1,4 @@
-package hxd.modding.data;
+package heapsmod.data;
 
 typedef ModData = {
     ?title:String,

@@ -1,4 +1,4 @@
-package hxd.modding;
+package heapsmod;
 
 import hxd.fs.FileEntry;
 import hxd.fs.FileSystem;

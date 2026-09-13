@@ -10,7 +10,7 @@ HeapsMod is a modding framework designed specifically for the [Heaps](https://he
 ## Usage
 
 ```haxe
-import hxd.modding.HeapsMod;
+import heapsmod.HeapsMod;
 
 HeapsMod.init();
 
@@ -36,7 +36,7 @@ for (meta in HeapsMod.scan())
 ### Usage
 
 ```haxe
-import hxd.modding.script.HeapsScript;
+import heapsmod.script.HeapsScript;
 
 // Should be done before loading mods
 
