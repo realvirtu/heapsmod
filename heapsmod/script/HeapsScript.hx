@@ -40,7 +40,7 @@ class HeapsScript
             }
         }
 
-        loadDir('');        
+        loadDir('');
 
         world.start();
     }
