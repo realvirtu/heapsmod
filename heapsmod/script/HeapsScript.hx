@@ -110,6 +110,20 @@ class HeapsScript
         Config.globalImports.remove(path);
     }
 
+    public static function setGlobalVariable(name:String, value:Dynamic)
+    {
+        if (!HeapsMod.initialized) return;
+
+        Config.globalVariables.set(name, value);
+    }
+
+    public static function removeGlobalVariable(name:String)
+    {
+        if (!HeapsMod.initialized) return;
+
+        Config.globalVariables.remove(name);
+    }
+
     public static function setPreprocessor(name:String, value:String)
     {
         if (!HeapsMod.initialized) return;
