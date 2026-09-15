@@ -10,11 +10,12 @@ class ModUtil
 {
     public static function getMeta(mod:String, skipWarnings:Bool = true):ModData
     {
+        var path:String = Path.join([mod, HeapsMod.config.metaFile]);
         var meta:ModData = null;
 
         try
         {
-            var text:String = HeapsModFS.modFS.get(Path.join([mod, HeapsMod.config.metaFile])).getText();
+            var text:String = HeapsModFS.modFS.get(path).getText();
 
             meta = Json.parse(text);
             meta ??= {};
@@ -25,7 +26,12 @@ class ModUtil
 
             meta.mod = mod;
         }
-        catch (e) return null;
+        catch (e)
+        {
+            HeapsMod.error(WARNING, MOD_MISSING_META, 'Mod $mod lacks metadata');
+
+            return null;
+        }
         
         if (!skipWarnings)
         {
@@ -42,8 +48,11 @@ class ModUtil
     public static function getIcon(mod:String):Tile
     {
         var path:String = Path.join([mod, HeapsMod.config.iconFile]);
+        var tile:Tile = try { new Image(HeapsModFS.modFS.get(path)).toTile(); } catch (e) null;
 
-        return try { new Image(HeapsModFS.modFS.get(path)).toTile(); } catch (e) null;
+        if (tile == null) HeapsMod.error(WARNING, MOD_MISSING_ICON, 'Mod $mod lacks an icon');
+
+        return tile;
     }
 
     public static function isCompatible(meta:ModData):Bool

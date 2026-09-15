@@ -152,14 +152,7 @@ class HeapsMod
         {
             var meta:ModData = ModUtil.getMeta(mod.name);
 
-            if (meta == null)
-            {
-                if (mod.isDirectory) error(WARNING, MOD_MISSING_META, 'Mod ${mod.name} lacks metadata');
-
-                continue;
-            }
-
-            if (ModUtil.getIcon(mod.name) == null) HeapsMod.error(WARNING, MOD_MISSING_ICON, 'Mod ${mod.name} lacks an icon');
+            if (meta == null) continue;
             
             result.push(meta);
         }
