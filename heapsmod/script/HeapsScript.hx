@@ -23,13 +23,13 @@ class HeapsScript
 
         Sink.listen(e -> HeapsMod.error(ERROR, SCRIPT_ERROR, e.message));
 
-        function loadDir(path:String)
+        function loadPath(path:String)
         {
             for (file in Res.loader.dir(path))
             {
                 if (file.entry.isDirectory)
                 {
-                    loadDir(file.entry.path);
+                    loadPath(file.entry.path);
 
                     continue;
                 }
@@ -40,7 +40,7 @@ class HeapsScript
             }
         }
 
-        loadDir('');
+        loadPath('');
 
         world.start();
     }
