@@ -30,6 +30,8 @@ class ModUtil
             if (meta.id == null) HeapsMod.error(WARNING, MOD_MISSING_ID, 'Mod $mod is missing "id"');
             if (meta.version == null) HeapsMod.error(WARNING, MOD_MISSING_MOD_VERSION, 'Mod $mod is missing "version"');
             if (meta.apiVersion == null) HeapsMod.error(WARNING, MOD_MISSING_API_VERSION, 'Mod $mod is missing "apiVersion"');
+
+            if (!isCompatible(meta)) HeapsMod.error(WARNING, MOD_INCOMPATIBLE_VERSION, 'Mod $mod is incompatible with API version');
         }
 
         return meta;
