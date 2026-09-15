@@ -1,8 +1,10 @@
 package heapsmod.mod.util;
 
+import h2d.Tile;
 import haxe.io.Path;
 import haxe.Json;
 import heapsmod.data.ModData;
+import hxd.res.Image;
 
 class ModUtil
 {
@@ -35,6 +37,13 @@ class ModUtil
         }
 
         return meta;
+    }
+
+    public static function getIcon(mod:String):Tile
+    {
+        var path:String = Path.join([mod, HeapsMod.config.iconFile]);
+
+        return try { new Image(HeapsModFS.modFS.get(path)).toTile(); } catch (e) null;
     }
 
     public static function isCompatible(meta:ModData):Bool

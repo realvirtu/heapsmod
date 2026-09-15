@@ -17,6 +17,7 @@ using Lambda;
 typedef HeapsModConfig = {
     ?modRoot:String,
     ?metaFile:String,
+    ?iconFile:String,
     ?apiVersion:Int,
     ?skipDependencies:Bool,
     ?skipDependencyErrors:Bool,
@@ -33,6 +34,7 @@ class HeapsMod
 {
     static final DEFAULT_MOD_ROOT:String = 'mods';
     static final DEFAULT_META_FILE:String = 'meta.json';
+    static final DEFAULT_ICON_FILE:String = 'icon.png';
     static final DEFAULT_EXCLUDES:Array<String> = ['.vscode', '.git'];
     
     #if hxscript
@@ -55,6 +57,7 @@ class HeapsMod
         config ??= {};
         config.modRoot ??= DEFAULT_MOD_ROOT;
         config.metaFile ??= DEFAULT_META_FILE;
+        config.iconFile ??= DEFAULT_ICON_FILE;
         config.skipDependencies ??= false;
         config.skipDependencyErrors ??= false;
         config.exclude ??= DEFAULT_EXCLUDES;
@@ -155,6 +158,8 @@ class HeapsMod
 
                 continue;
             }
+
+            if (ModUtil.getIcon(mod.name) == null) HeapsMod.error(WARNING, MOD_MISSING_ICON, 'Mod ${mod.name} lacks an icon');
             
             result.push(meta);
         }
