@@ -1,6 +1,8 @@
 package heapsmod.mod;
 
+import h2d.Tile;
 import heapsmod.data.ModData;
+import heapsmod.mod.util.ModUtil;
 
 #if hxscript
 import heapsmod.script.HeapsScript;
@@ -32,6 +34,11 @@ class Mod
         #if hxscript
         if (hasPreprocessor) HeapsScript.setPreprocessor(preprocessor, Std.string(version));
         #end
+    }
+
+    public function getIcon():Tile
+    {
+        return ModUtil.getIcon(mod);
     }
 
     public function clearCache()
