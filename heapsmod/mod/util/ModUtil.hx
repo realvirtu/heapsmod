@@ -8,7 +8,7 @@ import hxd.res.Image;
 
 class ModUtil
 {
-    public static function getMeta(mod:String, skipWarnings:Bool = true):ModData
+    public static function getMeta(mod:String, skipWarnings:Bool = false):ModData
     {
         var path:String = Path.join([mod, HeapsMod.config.metaFile]);
         var meta:ModData = null;

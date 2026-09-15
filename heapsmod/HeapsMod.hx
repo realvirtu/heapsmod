@@ -97,7 +97,7 @@ class HeapsMod
         
         for (mod in dirs)
         {
-            var meta:ModData = ModUtil.getMeta(mod, false);
+            var meta:ModData = ModUtil.getMeta(mod);
 
             if (!ModUtil.isCompatible(meta)) continue;
 
@@ -150,7 +150,7 @@ class HeapsMod
 
         for (mod in HeapsModFS.modFS.dir(''))
         {
-            var meta:ModData = ModUtil.getMeta(mod.name);
+            var meta:ModData = ModUtil.getMeta(mod.name, true);
 
             if (meta == null) continue;
             
