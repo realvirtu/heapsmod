@@ -98,7 +98,7 @@ class HeapsScript
     {
         if (!HeapsMod.initialized) return;
 
-        alias ??= path.substring(path.lastIndexOf('.') + 1);
+        alias ??= path.substr(path.lastIndexOf('.') + 1);
 
         Config.globalImports.set(path, IAsName(alias));
     }
