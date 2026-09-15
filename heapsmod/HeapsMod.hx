@@ -1,5 +1,6 @@
 package heapsmod;
 
+import heapsmod.data.ConfigData;
 import heapsmod.data.ModData;
 import heapsmod.mod.util.DependencyUtil;
 import heapsmod.mod.util.ModUtil;
@@ -14,22 +15,6 @@ import heapsmod.script.HeapsScript;
 
 using Lambda;
 
-typedef HeapsModConfig = {
-    ?modRoot:String,
-    ?metaFile:String,
-    ?iconFile:String,
-    ?apiVersion:Int,
-    ?skipDependencies:Bool,
-    ?skipDependencyErrors:Bool,
-    ?onError:HeapsModError->Void,
-    ?exclude:Array<String>,
-    ?compat:Map<String, String>,
-    ?mods:Array<String>,
-    #if hxscript
-    ?scriptExts:Array<String>,
-    #end
-}
-
 class HeapsMod
 {
     static final DEFAULT_MOD_ROOT:String = 'mods';
@@ -42,12 +27,12 @@ class HeapsMod
     #end
 
     public static var initialized(default, null):Bool;
-    public static var config(default, null):HeapsModConfig;
+    public static var config(default, null):ConfigData;
 
     static var onError(default, null):HeapsModError->Void;
     static var mods(default, null):Array<Mod>;
 
-    public static function init(?config:HeapsModConfig)
+    public static function init(?config:ConfigData)
     {
         if (initialized) return;
 
