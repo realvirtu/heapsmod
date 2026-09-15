@@ -9,3 +9,8 @@ typedef ModData = {
     ?dependencies:Array<DependencyData>,
     ?mod:String
 }
+
+typedef DependencyData = {
+    ?id:String,
+    ?version:Int
+}
