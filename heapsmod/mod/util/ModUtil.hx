@@ -10,6 +10,8 @@ class ModUtil
 {
     public static function getMeta(mod:String, skipWarnings:Bool = false):ModData
     {
+        if (!HeapsMod.initialized) return null;
+
         var path:String = Path.join([mod, HeapsMod.config.metaFile]);
         var meta:ModData = null;
 
@@ -47,6 +49,8 @@ class ModUtil
 
     public static function getIcon(mod:String):Tile
     {
+        if (!HeapsMod.initialized) return null;
+
         var path:String = Path.join([mod, HeapsMod.config.iconFile]);
         var tile:Tile = try { new Image(HeapsModFS.modFS.get(path)).toTile(); } catch (e) null;
 
