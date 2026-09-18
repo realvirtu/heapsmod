@@ -180,15 +180,11 @@ class HeapsMod
         #if hxscript
         HeapsScript.clearScripts();
         #end
-
-        initialized = false;
-        mods = null;
-
-        // Dispose the modding filesystem
-        // Reuse the original filesystem
-        Res.loader = new Loader(HeapsModFS.baseFS);
-
+        
         HeapsModFS.instance.dispose();
+        
+        mods = null;
+        initialized = false;
 
         error(INFO, HEAPSMOD_DISABLED, 'HeapsMod disabled');
     }

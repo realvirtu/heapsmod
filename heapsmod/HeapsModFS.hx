@@ -4,6 +4,8 @@ import hxd.fs.FileEntry;
 import hxd.fs.FileSystem;
 import hxd.fs.LocalFileSystem;
 import hxd.fs.MultiFileSystem;
+import hxd.res.Loader;
+import hxd.Res;
 
 using Lambda;
 
@@ -43,13 +45,14 @@ class HeapsModFS extends MultiFileSystem
 
     override function dispose()
     {
+        Res.loader = new Loader(baseFS);
+        
         fs.remove(baseFS);
         
         modFS.dispose();
         
         modFS = null;
         baseFS = null;
-
         instance = null;
 
         super.dispose();
