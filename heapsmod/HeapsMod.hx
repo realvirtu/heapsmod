@@ -76,11 +76,11 @@ class HeapsMod
         disableMods([mod]);
     }
 
-    public static function enableMods(dirs:Array<String>)
+    public static function enableMods(mods:Array<String>)
     {
         if (!initialized) return;
         
-        for (mod in dirs)
+        for (mod in mods)
         {
             var meta:ModData = ModUtil.getMeta(mod);
 
@@ -100,7 +100,7 @@ class HeapsMod
 
             if (hasEnabledMod(mod)) continue;
 
-            mods.push(new Mod(meta));
+            HeapsMod.mods.push(new Mod(meta));
 
             error(INFO, MOD_ENABLED, 'Enabled mod $mod');
         }
@@ -110,16 +110,16 @@ class HeapsMod
         #end
     }
 
-    public static function disableMods(dirs:Array<String>)
+    public static function disableMods(mods:Array<String>)
     {
         if (!initialized) return;
 
-        for (mod in dirs)
+        for (mod in mods)
         {
             var mod:Mod = getEnabledMod(mod);
             mod.dispose();
 
-            mods.remove(mod);
+            HeapsMod.mods.remove(mod);
 
             error(INFO, MOD_DISABLED, 'Disabled mod $mod');
         }
