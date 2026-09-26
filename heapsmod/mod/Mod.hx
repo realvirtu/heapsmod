@@ -10,19 +10,46 @@ import heapsmod.script.HeapsScript;
 
 using StringTools;
 
+/**
+ * A class that's loaded when enabling mods through HeapsMod.
+ */
 class Mod
 {
+    /**
+     * The mod's metadata.
+     */
     public final meta:ModData;
 
+    /**
+     * The mod's folder name.
+     */
     public var mod(get, never):String;
+
+    /**
+     * The mod's id.
+     */
     public var id(get, never):String;
+
+    /**
+     * The current version of the mod.
+     */
     public var version(get, never):Int;
 
     #if hxscript
+    /**
+     * A preprocessor for the mod to be used in scripts. Ex. `#if mod`.
+     */
     public var preprocessor(get, never):String;
+
+    /**
+     * Whether the mod has a preprocessor or not.
+     */
     public var hasPreprocessor(get, never):Bool;
     #end
 
+    /**
+     * A unique filesystem for the mod.
+     */
     public var fs(default, null):ModFS;
 
     public function new(meta:ModData)
@@ -36,16 +63,26 @@ class Mod
         #end
     }
 
+    /**
+     * Retrieves the mod's icon image.
+     * @return The icon as a `Tile`.
+     */
     public function getIcon():Tile
     {
         return ModUtil.getIcon(mod);
     }
 
+    /**
+     * Clears the mod filesystem cache.
+     */
     public function clearCache()
     {
         fs.clearCache();
     }
 
+    /**
+     * Disposes the mod and its filesystem.
+     */
     public function dispose()
     {
         HeapsModFS.instance.fs.remove(fs);

@@ -6,8 +6,17 @@ import haxe.Json;
 import heapsmod.data.ModData;
 import hxd.res.Image;
 
+/**
+ * A utility class for mods.
+ */
 class ModUtil
 {
+    /**
+     * Retrieves the metadata for a mod.
+     * @param mod The mod folder name.
+     * @param skipWarnings Whether warnings should be ignored.
+     * @return Mod metadata.
+     */
     public static function getMeta(mod:String, skipWarnings:Bool = false):ModData
     {
         if (!HeapsMod.initialized) return null;
@@ -47,6 +56,11 @@ class ModUtil
         return meta;
     }
 
+    /**
+     * Retrieves the icon for a mod.
+     * @param mod The mod folder name.
+     * @return The mod icon as a `Tile`.
+     */
     public static function getIcon(mod:String):Tile
     {
         if (!HeapsMod.initialized) return null;
@@ -59,6 +73,9 @@ class ModUtil
         return tile;
     }
 
+    /**
+     * @return Whether `meta` is compatible with the current API version.
+     */
     public static function isCompatible(meta:ModData):Bool
     {
         return meta != null && (meta.apiVersion == HeapsMod.config.apiVersion || HeapsMod.config.apiVersion == null);
