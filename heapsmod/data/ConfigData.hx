@@ -50,7 +50,7 @@ typedef ConfigData = {
      * An array of file paths that should be ignored by mod filesystems.
      */
     @:optional
-    var exclude:Array<String>;
+    var ignored:Array<String>;
 
     /**
      * A string map for validating file paths with newer ones.

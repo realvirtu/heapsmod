@@ -21,8 +21,8 @@ class ModFS extends LocalFileSystem
     {
         if (path.startsWith('/')) path = path.substr(1);
 
-        // Skip excluded paths
-        if (HeapsMod.config.exclude.exists(exclude -> return path.startsWith(exclude))) return null;
+        // Skip ignored paths
+        if (HeapsMod.config.ignored.exists(ignore -> return path.startsWith(ignore))) return null;
 
         var entry:LocalEntry = super.open(path, check);
 

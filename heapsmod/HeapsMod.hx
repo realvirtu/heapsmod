@@ -36,9 +36,9 @@ class HeapsMod
     static final DEFAULT_ICON_FILE:String = 'icon.png';
 
     /**
-     * An array of default file paths to exclude from mod filesystems.
+     * An array of default file paths that are ignored by mod filesystems.
      */
-    static final DEFAULT_EXCLUDES:Array<String> = ['.vscode', '.git'];
+    static final DEFAULT_IGNORED:Array<String> = ['.vscode', '.git'];
     
     #if hxscript
     /**
@@ -77,7 +77,7 @@ class HeapsMod
         config.iconFile ??= DEFAULT_ICON_FILE;
         config.skipDependencies ??= false;
         config.skipDependencyErrors ??= false;
-        config.exclude ??= DEFAULT_EXCLUDES;
+        config.ignored ??= DEFAULT_IGNORED;
         config.compat ??= [];
         config.mods ??= [];
 
