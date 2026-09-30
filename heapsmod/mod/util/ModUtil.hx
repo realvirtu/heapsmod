@@ -78,6 +78,8 @@ class ModUtil
      */
     public static function isCompatible(meta:ModData):Bool
     {
+        if (!HeapsMod.initialized) return false;
+
         return meta != null && (meta.apiVersion == HeapsMod.config.apiVersion || HeapsMod.config.apiVersion == null);
     }
 }
