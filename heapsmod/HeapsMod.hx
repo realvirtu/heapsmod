@@ -2,9 +2,9 @@ package heapsmod;
 
 import heapsmod.data.ConfigData;
 import heapsmod.data.ModData;
-import heapsmod.mod.util.DependencyUtil;
-import heapsmod.mod.util.ModUtil;
 import heapsmod.mod.Mod;
+import heapsmod.util.DependencyUtil;
+import heapsmod.util.ModUtil;
 import heapsmod.HeapsModError;
 import hxd.res.Loader;
 import hxd.Res;

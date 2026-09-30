@@ -1,4 +1,4 @@
-package heapsmod.mod.util;
+package heapsmod.util;
 
 import h2d.Tile;
 import haxe.io.Path;

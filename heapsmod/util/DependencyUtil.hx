@@ -1,4 +1,4 @@
-package heapsmod.mod.util;
+package heapsmod.util;
 
 import heapsmod.data.ModData;
 

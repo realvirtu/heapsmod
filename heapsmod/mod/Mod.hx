@@ -2,7 +2,7 @@ package heapsmod.mod;
 
 import h2d.Tile;
 import heapsmod.data.ModData;
-import heapsmod.mod.util.ModUtil;
+import heapsmod.util.ModUtil;
 
 #if hxscript
 import heapsmod.script.HeapsScript;
