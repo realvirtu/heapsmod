@@ -249,16 +249,19 @@ class HeapsMod
     {
         if (!initialized) return;
 
+        error(INFO, HEAPSMOD_DISABLED, 'HeapsMod disabled');
+
         #if hxscript
         HeapsScript.clearScripts();
         #end
         
         HeapsModFS.instance.dispose();
         
+        config = null;
+        onError = null;
         mods = null;
-        initialized = false;
 
-        error(INFO, HEAPSMOD_DISABLED, 'HeapsMod disabled');
+        initialized = false;
     }
 
     /**
