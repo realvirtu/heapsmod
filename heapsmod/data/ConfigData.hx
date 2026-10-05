@@ -23,7 +23,7 @@ typedef ConfigData = {
     var iconFile:String;
 
     /**
-     * The API version number mods are required to be at.
+     * The API version rule mods are required to be compatible with.
      */
     @:optional
     var apiVersion:Int->Bool;
