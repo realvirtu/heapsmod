@@ -80,6 +80,6 @@ class ModUtil
     {
         if (!HeapsMod.initialized) return false;
 
-        return meta != null && (meta.apiVersion == HeapsMod.config.apiVersion || HeapsMod.config.apiVersion == null);
+        return meta != null && (HeapsMod.config.apiVersion == null || HeapsMod.config.apiVersion(meta.apiVersion));
     }
 }

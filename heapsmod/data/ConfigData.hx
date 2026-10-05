@@ -26,7 +26,7 @@ typedef ConfigData = {
      * The API version number mods are required to be at.
      */
     @:optional
-    var apiVersion:Int;
+    var apiVersion:Int->Bool;
 
     /**
      * Whether dependency checks should be skipped or not.
