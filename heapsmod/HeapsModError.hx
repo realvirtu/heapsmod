@@ -31,12 +31,29 @@ enum ErrorType
     SCRIPT_ERROR;
 }
 
+/**
+ * An error class for HeapsMod.
+ */
 class HeapsModError
 {
+    /**
+     * The previous error given.
+     */
     static var lastError:HeapsModError;
 
+    /**
+     * The error code (info, warning, error).
+     */
     public var code(default, null):ErrorCode;
+
+    /**
+     * The error type.
+     */
     public var type(default, null):ErrorType;
+
+    /**
+     * The error message string.
+     */
     public var message(default, null):String;
 
     public function new() {}
@@ -46,6 +63,12 @@ class HeapsModError
         return '$code: $message';
     }
 
+    /**
+     * Builds an error to be used by HeapsMod.
+     * @param code The error code (info, warning, error).
+     * @param type The error type.
+     * @param message The error message string.
+     */
     public static function get(code:ErrorCode, type:ErrorType, message:String):HeapsModError
     {
         var error:HeapsModError = lastError ?? new HeapsModError();

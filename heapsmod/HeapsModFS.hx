@@ -9,11 +9,24 @@ import hxd.Res;
 
 using Lambda;
 
+/**
+ * Filesystem class for HeapsMod.
+ */
 class HeapsModFS extends MultiFileSystem
 {
+    /**
+     * The `HeapsModFS` instance.
+     */
     public static var instance:HeapsModFS;
     
+    /**
+     * A local filesystem used for mods.
+     */
     public static var modFS:LocalFileSystem;
+
+    /**
+     * The original filesystem used.
+     */
     public static var baseFS:FileSystem;
 
     public function new(fs:FileSystem)

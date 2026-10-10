@@ -4,6 +4,9 @@ package heapsmod.script;
 import hxd.fs.FileEntry;
 import hxscript.Module;
 
+/**
+ * A script class to be loaded by the `HeapsScript` class.
+ */
 class HeapsModule extends Module
 {
     public function new(entry:FileEntry)

@@ -6,8 +6,14 @@ import hxd.fs.LocalFileSystem;
 using StringTools;
 using Lambda;
 
+/**
+ * A local filesystem class used for mods themselves.
+ */
 class ModFS extends LocalFileSystem
 {
+    /**
+     * The mod instance.
+     */
     public var mod(default, null):Mod;
 
     public function new(mod:Mod)
