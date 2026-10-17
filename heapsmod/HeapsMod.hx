@@ -83,6 +83,7 @@ class HeapsMod
 
         #if hxscript
         config.scriptExts ??= DEFAULT_SCRIPT_EXTS;
+        config.modPreprocessors ??= true;
         #end
 
         onError = config.onError;

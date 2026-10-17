@@ -119,14 +119,18 @@ class Mod
 
     #if hxscript
     @:noCompletion
-    inline function get_preprocessor():String
+    function get_preprocessor():String
     {
+        if (!HeapsMod.config.modPreprocessors) return '';
+
         return ~/[^A-Za-z0-9_]/g.replace(id, '_');
     }
 
     @:noCompletion
-    inline function get_hasPreprocessor():Bool
+    function get_hasPreprocessor():Bool
     {
+        if (!HeapsMod.config.modPreprocessors) return false;
+
         return id.trim() != '';
     }
     #end
