@@ -8,6 +8,7 @@ import hxscript.Config;
 import hxscript.Environment;
 
 using Lambda;
+using StringTools;
 
 /**
  * A script handler for HeapsMod.
@@ -72,22 +73,46 @@ class HeapsScript
         {
             for (type in module.types)
             {
-                if (type is ScriptedClass)
+                if (!(type is ScriptedClass)) continue;
+
+                var cls:ScriptedClass = cast type;
+                var native:Dynamic = try { cls.instanceClass; } catch (e) null;
+
+                while (native != null)
                 {
-                    var cls:ScriptedClass = cast type;
-                    var native:Dynamic = try { cls.instanceClass; } catch (e) null;
+                    native = Type.getSuperClass(native);
 
-                    while (native != null)
-                    {
-                        native = Type.getSuperClass(native);
-
-                        if (native == null || native == base) break;
-                    }
-
-                    if (native != base) continue;
-
-                    result.push(cls);
+                    if (native == null || native == base) break;
                 }
+
+                if (native != base) continue;
+
+                result.push(cls);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Like `listClasses`, but instead lists any classes found within a file path.
+     * @param path The file location to check.
+     */
+    public static function listClassesByPath(path:String):Array<ScriptedClass>
+    {
+        if (!HeapsMod.initialized || world == null) return [];
+
+        var result:Array<ScriptedClass> = [];
+
+        for (module in world.modules)
+        {
+            if (!module.path.startsWith(path)) continue;
+
+            for (type in module.types)
+            {
+                if (!(type is ScriptedClass)) continue;
+
+                result.push(cast type);
             }
         }
 
