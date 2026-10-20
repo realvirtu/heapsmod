@@ -22,7 +22,7 @@ HeapsMod.enableMod("testmod3");
 // Same as above, but safer as dependency checks are done
 for (meta in HeapsMod.scan())
 {
-    HeapsMod.enableMod(meta.mod);
+    HeapsMod.enableMod(meta.dir);
 }
 ```
 
