@@ -21,9 +21,9 @@ class Mod
     public final meta:ModMetadata;
 
     /**
-     * The mod's folder name.
+     * The mod's directory name.
      */
-    public var mod(get, never):String;
+    public var dir(get, never):String;
 
     /**
      * The mod's id.
@@ -59,6 +59,8 @@ class Mod
         HeapsModFS.instance.fs.insert(0, fs = new ModFS(this));
 
         #if hxscript
+        for (name => value in meta.preprocessors) HeapsScript.setPreprocessor(name, value);
+
         if (hasPreprocessor) HeapsScript.setPreprocessor(preprocessor, Std.string(version));
         #end
     }
@@ -69,7 +71,7 @@ class Mod
      */
     public function getIcon():Tile
     {
-        return ModUtil.getIcon(mod);
+        return ModUtil.getIcon(dir);
     }
 
     /**
@@ -90,19 +92,21 @@ class Mod
         fs.dispose();
 
         #if hxscript
+        for (name => value in meta.preprocessors) HeapsScript.removePreprocessor(name);
+
         if (hasPreprocessor) HeapsScript.removePreprocessor(preprocessor);
         #end
     }
 
     public function toString():String
     {
-        return mod;
+        return dir;
     }
 
     @:noCompletion
-    inline function get_mod():String
+    inline function get_dir():String
     {
-        return meta.mod;
+        return meta.dir;
     }
 
     @:noCompletion

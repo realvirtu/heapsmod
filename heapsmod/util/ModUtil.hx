@@ -45,7 +45,11 @@ class ModUtil
             meta.dependencies = JsonUtil.getStringMap('dependencies', json);
             meta.id = JsonUtil.getString('id', json);
 
-            meta.mod = mod;
+            #if hxscript
+            meta.preprocessors = JsonUtil.getStringMap('preprocessors', json);
+            #end
+
+            meta.dir = mod;
         }
         catch (e)
         {

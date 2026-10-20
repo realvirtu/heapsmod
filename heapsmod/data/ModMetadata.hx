@@ -40,9 +40,17 @@ typedef ModMetadata = {
     @:optional
     var dependencies:Map<String, Int>;
 
+    #if hxscript
     /**
-     * The mod folder name.
+     * A list of preprocessors for the mod, to be used in scripts.
      */
     @:optional
-    var mod:String;
+    var preprocessors:Map<String, String>;
+    #end
+
+    /**
+     * The mod's directory name.
+     */
+    @:optional
+    var dir:String;
 }

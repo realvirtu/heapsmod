@@ -173,7 +173,7 @@ class HeapsMod
             error(INFO, MOD_DISABLED, 'Disabled mod $mod');
         }
 
-        enableMods(getEnabledMods().map(mod -> return mod.mod));
+        enableMods(getEnabledMods().map(mod -> return mod.dir));
     }
 
     /**
@@ -217,7 +217,7 @@ class HeapsMod
     {
         if (!initialized) return null;
 
-        return getEnabledMods().find(m -> return m.mod == id || m.id == id);
+        return getEnabledMods().find(m -> return m.dir == id || m.id == id);
     }
 
     /**
@@ -251,6 +251,8 @@ class HeapsMod
         if (!initialized) return;
 
         error(INFO, HEAPSMOD_DISABLED, 'HeapsMod disabled');
+
+        for (mod in mods) mod.dispose();
 
         #if hxscript
         HeapsScript.clearScripts();

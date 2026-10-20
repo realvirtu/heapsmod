@@ -72,7 +72,7 @@ typedef ConfigData = {
     var scriptExts:Array<String>;
 
     /**
-     * Whether mods have their own script preprocessors.
+     * Whether mod ids have their own script preprocessors.
      */
     @:optional
     var modPreprocessors:Bool;
