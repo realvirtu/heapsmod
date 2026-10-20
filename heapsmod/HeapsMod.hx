@@ -221,7 +221,7 @@ class HeapsMod
     }
 
     /**
-     * Retrives the version of an enabled mod.
+     * Retrieves the version of an enabled mod.
      * @param id The mod id.
      * @return The mod version.
      */
