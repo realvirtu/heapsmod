@@ -22,36 +22,40 @@ class ModUtil
         if (!HeapsMod.initialized) return null;
 
         var path:String = Path.join([mod, HeapsMod.config.metaFile]);
-        var meta:ModData = null;
+        var meta:ModData = {};
 
+        // Don't parse metadata if it doesn't exist
+        if (!HeapsModFS.modFS.exists(path))
+        {
+            HeapsMod.error(WARNING, MOD_MISSING_META, 'Mod $mod is missing metadata');
+
+            return null;
+        }
+
+        // Try and parse the mod metadata
+        // If it fails to parse, output an error
         try
         {
-            var text:String = HeapsModFS.modFS.get(path).getText();
+            var json:Dynamic = Json.parse(HeapsModFS.modFS.get(path).getText());
 
-            meta = Json.parse(text);
-            meta ??= {};
-            
-            meta.title ??= '';
-            meta.description ??= '';
-            meta.dependencies ??= [];
+            meta.title = JsonUtil.getString('title', json);
+            meta.description = JsonUtil.getString('description', json);
+            meta.version = JsonUtil.getInt('version', json);
+            meta.apiVersion = JsonUtil.getInt('apiVersion', json);
+            meta.dependencies = JsonUtil.getStringMap('dependencies', json);
+            meta.id = JsonUtil.getString('id', json);
 
             meta.mod = mod;
         }
         catch (e)
         {
-            HeapsMod.error(WARNING, MOD_MISSING_META, 'Mod $mod lacks metadata');
+            HeapsMod.error(ERROR, MOD_META_PARSE_ERROR, 'Failed to parse metadata for mod $mod');
 
             return null;
         }
         
-        if (!skipWarnings)
-        {
-            if (meta.id == null) HeapsMod.error(WARNING, MOD_MISSING_ID, 'Mod $mod is missing "id"');
-            if (meta.version == null) HeapsMod.error(WARNING, MOD_MISSING_MOD_VERSION, 'Mod $mod is missing "version"');
-            if (meta.apiVersion == null) HeapsMod.error(WARNING, MOD_MISSING_API_VERSION, 'Mod $mod is missing "apiVersion"');
-
-            if (!isCompatible(meta)) HeapsMod.error(WARNING, MOD_INCOMPATIBLE_VERSION, 'Mod $mod is incompatible with API version');
-        }
+        // Give a warning if the mod's API version is incompatible
+        if (!isCompatible(meta) && !skipWarnings) HeapsMod.error(WARNING, MOD_INCOMPATIBLE_VERSION, 'Mod $mod is incompatible with API version');
 
         return meta;
     }

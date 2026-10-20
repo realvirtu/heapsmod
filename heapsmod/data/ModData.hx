@@ -38,28 +38,11 @@ typedef ModData = {
      * A list of required dependencies for the mod.
      */
     @:optional
-    var dependencies:Array<DependencyData>;
+    var dependencies:Map<String, Int>;
 
     /**
      * The mod folder name.
      */
     @:optional
     var mod:String;
-}
-
-/**
- * The data for mod dependencies.
- */
-typedef DependencyData = {
-    /**
-     * The id for the dependency.
-     */
-    @:optional
-    var id:String;
-
-    /**
-     * The version number for the dependency.
-     */
-    @:optional
-    var version:Int;
 }

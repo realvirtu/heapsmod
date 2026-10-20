@@ -18,7 +18,7 @@ class DependencyUtil
     {
         if (meta == null) return [];
         
-        return meta.dependencies.map(dep -> return dep.id);
+        return [for (id in meta.dependencies.keys()) id];
     }
 
     /**
@@ -30,7 +30,7 @@ class DependencyUtil
     {
         if (meta == null) return [];
 
-        return meta.dependencies.filter(dep -> return HeapsMod.getEnabledModVersion(dep.id) != dep.version).map(dep -> return dep.id);
+        return getDependencies(meta).filter(id -> return HeapsMod.getEnabledModVersion(id) != meta.dependencies.get(id));
     }
 
     /**
@@ -53,11 +53,11 @@ class DependencyUtil
 
             if (!HeapsMod.config.skipDependencies)
             {
-                for (dep in meta.dependencies)
+                for (id in meta.dependencies.keys())
                 {
                     var skipErrors:Bool = HeapsMod.config.skipDependencyErrors;
 
-                    if (dep.id == meta.id)
+                    if (id == meta.id)
                     {
                         HeapsMod.error(skipErrors ? WARNING : ERROR, MOD_DEPENDENCY_ERROR, 'Mod ${meta.id} cannot depend on itself');
 
@@ -66,7 +66,7 @@ class DependencyUtil
                         return;
                     }
 
-                    if (checked.contains(dep.id))
+                    if (checked.contains(id))
                     {
                         HeapsMod.error(skipErrors ? WARNING : ERROR, MOD_DEPENDENCY_ERROR, 'Mods cannot depend on each other');
 
@@ -75,7 +75,7 @@ class DependencyUtil
                         return;
                     }
 
-                    add(dep.id);
+                    add(id);
                 }
             }
 
