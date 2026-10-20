@@ -3,7 +3,7 @@ package heapsmod.util;
 import h2d.Tile;
 import haxe.io.Path;
 import haxe.Json;
-import heapsmod.data.ModData;
+import heapsmod.data.ModMetadata;
 import hxd.res.Image;
 
 /**
@@ -17,12 +17,12 @@ class ModUtil
      * @param skipWarnings Whether warnings should be ignored.
      * @return Mod metadata.
      */
-    public static function getMeta(mod:String, skipWarnings:Bool = false):ModData
+    public static function getMeta(mod:String, skipWarnings:Bool = false):ModMetadata
     {
         if (!HeapsMod.initialized) return null;
 
         var path:String = Path.join([mod, HeapsMod.config.metaFile]);
-        var meta:ModData = {};
+        var meta:ModMetadata = {};
 
         // Don't parse metadata if it doesn't exist
         if (!HeapsModFS.modFS.exists(path))
@@ -80,7 +80,7 @@ class ModUtil
     /**
      * @return Whether `meta` is compatible with the current API version.
      */
-    public static function isCompatible(meta:ModData):Bool
+    public static function isCompatible(meta:ModMetadata):Bool
     {
         if (!HeapsMod.initialized) return false;
 

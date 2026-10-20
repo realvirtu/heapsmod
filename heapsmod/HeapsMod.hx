@@ -1,7 +1,7 @@
 package heapsmod;
 
 import heapsmod.data.ConfigData;
-import heapsmod.data.ModData;
+import heapsmod.data.ModMetadata;
 import heapsmod.mod.Mod;
 import heapsmod.util.DependencyUtil;
 import heapsmod.util.ModUtil;
@@ -127,7 +127,7 @@ class HeapsMod
         
         for (mod in mods)
         {
-            var meta:ModData = ModUtil.getMeta(mod);
+            var meta:ModMetadata = ModUtil.getMeta(mod);
 
             if (!ModUtil.isCompatible(meta)) continue;
 
@@ -180,15 +180,15 @@ class HeapsMod
      * Scans the mod root for mod metadata.
      * @return An array of mod metadata.
      */
-    public static function scan():Array<ModData>
+    public static function scan():Array<ModMetadata>
     {
         if (!initialized) return [];
 
-        var result:Array<ModData> = [];
+        var result:Array<ModMetadata> = [];
 
         for (mod in HeapsModFS.modFS.dir(''))
         {
-            var meta:ModData = ModUtil.getMeta(mod.name, true);
+            var meta:ModMetadata = ModUtil.getMeta(mod.name, true);
 
             if (meta == null) continue;
             

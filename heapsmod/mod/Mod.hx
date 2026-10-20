@@ -1,7 +1,7 @@
 package heapsmod.mod;
 
 import h2d.Tile;
-import heapsmod.data.ModData;
+import heapsmod.data.ModMetadata;
 import heapsmod.util.ModUtil;
 
 #if hxscript
@@ -18,7 +18,7 @@ class Mod
     /**
      * The mod's metadata.
      */
-    public final meta:ModData;
+    public final meta:ModMetadata;
 
     /**
      * The mod's folder name.
@@ -52,7 +52,7 @@ class Mod
      */
     public var fs(default, null):ModFS;
 
-    public function new(meta:ModData)
+    public function new(meta:ModMetadata)
     {
         this.meta = meta;
 

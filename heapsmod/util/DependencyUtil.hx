@@ -1,6 +1,6 @@
 package heapsmod.util;
 
-import heapsmod.data.ModData;
+import heapsmod.data.ModMetadata;
 
 using Lambda;
 
@@ -14,7 +14,7 @@ class DependencyUtil
      * @param meta The mod metadata to check.
      * @return An array of dependency ids.
      */
-    public static function getDependencies(meta:ModData):Array<String>
+    public static function getDependencies(meta:ModMetadata):Array<String>
     {
         if (meta == null) return [];
         
@@ -26,7 +26,7 @@ class DependencyUtil
      * @param meta The mod metadata to check.
      * @return An array of dependency ids.
      */
-    public static function getMissingDependencies(meta:ModData):Array<String>
+    public static function getMissingDependencies(meta:ModMetadata):Array<String>
     {
         if (meta == null) return [];
 
@@ -38,14 +38,14 @@ class DependencyUtil
      * @param mods A list of mods to sort.
      * @return A sorted list of the mods.
      */
-    public static function sortByDependencies(mods:Array<ModData>):Array<ModData>
+    public static function sortByDependencies(mods:Array<ModMetadata>):Array<ModMetadata>
     {
-        var result:Array<ModData> = [];
+        var result:Array<ModMetadata> = [];
         var checked:Array<String> = [];
 
         function add(id:String)
         {
-            var meta:ModData = mods.find(mod -> return mod.id == id);
+            var meta:ModMetadata = mods.find(mod -> return mod.id == id);
 
             if (meta == null || result.contains(meta)) return;
 
@@ -53,7 +53,7 @@ class DependencyUtil
 
             if (!HeapsMod.config.skipDependencies)
             {
-                for (id in meta.dependencies.keys())
+                for (id in getDependencies(meta))
                 {
                     var skipErrors:Bool = HeapsMod.config.skipDependencyErrors;
 

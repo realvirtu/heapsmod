@@ -1,9 +1,9 @@
 package heapsmod.data;
 
 /**
- * The data for a mod.
+ * The metadata for a mod.
  */
-typedef ModData = {
+typedef ModMetadata = {
     /**
      * A title for the mod.
      */
