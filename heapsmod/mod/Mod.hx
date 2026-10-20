@@ -59,6 +59,8 @@ class Mod
         HeapsModFS.instance.fs.insert(0, fs = new ModFS(this));
 
         #if hxscript
+        if (!HeapsMod.config.modPreprocessors) return;
+        
         for (name => value in meta.preprocessors) HeapsScript.setPreprocessor(name, value);
 
         if (hasPreprocessor) HeapsScript.setPreprocessor(preprocessor, Std.string(version));
@@ -92,6 +94,8 @@ class Mod
         fs.dispose();
 
         #if hxscript
+        if (!HeapsMod.config.modPreprocessors) return;
+
         for (name => value in meta.preprocessors) HeapsScript.removePreprocessor(name);
 
         if (hasPreprocessor) HeapsScript.removePreprocessor(preprocessor);
@@ -125,16 +129,12 @@ class Mod
     @:noCompletion
     function get_preprocessor():String
     {
-        if (!HeapsMod.config.modPreprocessors) return '';
-
         return ~/[^A-Za-z0-9_]/g.replace(id, '_');
     }
 
     @:noCompletion
     function get_hasPreprocessor():Bool
     {
-        if (!HeapsMod.config.modPreprocessors) return false;
-
         return id.trim() != '';
     }
     #end
