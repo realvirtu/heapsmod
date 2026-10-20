@@ -266,10 +266,10 @@ class HeapsMod
     }
 
     /**
-     * Runs the `onError` callback.
-     * @param code The error code (INFO, WARNING, ERROR).
-     * @param type The type of error it is.
-     * @param message A message for giving the error details.
+     * Builds an error and runs the `onError` callback.
+     * @param code The error code (`INFO`, `WARNING`, `ERROR`).
+     * @param type The error type.
+     * @param message An error message string.
      */
     public static function error(code:ErrorCode, type:ErrorType, message:String)
     {
