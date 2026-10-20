@@ -143,7 +143,7 @@ class HeapsMod
                 if (!skipErrors) continue;
             }
 
-            if (hasEnabledMod(mod)) continue;
+            if (isModEnabled(mod)) continue;
 
             HeapsMod.mods.push(new Mod(meta));
 
@@ -165,7 +165,7 @@ class HeapsMod
 
         for (mod in mods)
         {
-            var mod:Mod = getEnabledMod(mod);
+            var mod:Mod = getMod(mod);
             mod.dispose();
 
             HeapsMod.mods.remove(mod);
@@ -209,11 +209,11 @@ class HeapsMod
     }
 
     /**
-     * Gets the instance of a specific mod that's enabled.
+     * Gets the instance of an enabled mod.
      * @param id The mod id.
      * @return The mod instance.
      */
-    public static function getEnabledMod(id:String):Mod
+    public static function getMod(id:String):Mod
     {
         if (!initialized) return null;
 
@@ -225,22 +225,22 @@ class HeapsMod
      * @param id The mod id.
      * @return The mod version.
      */
-    public static function getEnabledModVersion(id:String):Null<Int>
+    public static function getModVersion(id:String):Null<Int>
     {
         if (!initialized) return null;
 
-        return getEnabledMod(id)?.version;
+        return getMod(id)?.version;
     }
 
     /**
-     * Whether a mod is enabled or not.
+     * Whether or not a mod is enabled.
      * @param id The mod id.
      */
-    public static function hasEnabledMod(id:String):Bool
+    public static function isModEnabled(id:String):Bool
     {
         if (!initialized) return false;
 
-        return getEnabledMod(id) != null;
+        return getMod(id) != null;
     }
 
     /**

@@ -30,7 +30,7 @@ class DependencyUtil
     {
         if (meta == null) return [];
 
-        return getDependencies(meta).filter(id -> return HeapsMod.getEnabledModVersion(id) != meta.dependencies.get(id));
+        return getDependencies(meta).filter(id -> return HeapsMod.getModVersion(id) != meta.dependencies.get(id));
     }
 
     /**
