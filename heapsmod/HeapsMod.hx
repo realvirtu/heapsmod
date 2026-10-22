@@ -285,8 +285,7 @@ class HeapsMod
     {
         if (!initialized) return;
 
-        for (mod in mods)
-            mod.clearCache();
+        for (mod in mods) mod.clearCache();
 
         HeapsModFS.modFS.clearCache();
     }
