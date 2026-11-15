@@ -38,7 +38,7 @@ class HeapsMod
     /**
      * An array of default file paths that are ignored by mod filesystems.
      */
-    static final DEFAULT_IGNORED:Array<String> = ['.vscode', '.git'];
+    static final DEFAULT_IGNORED:Array<String> = ['.vscode', '.git', '.gitattributes', '.gitignore'];
     
     #if hxscript
     /**
