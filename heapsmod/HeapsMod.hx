@@ -16,7 +16,7 @@ import heapsmod.script.HeapsScript;
 using Lambda;
 
 /**
- * A class for implementing a modding system.
+ * Modding framework class for Heaps.
  */
 class HeapsMod
 {
