@@ -9,81 +9,81 @@ using Lambda;
  */
 class DependencyUtil
 {
-    /**
-     * Gets a list of dependencies for a mod.
-     * @param meta The mod metadata to check.
-     * @return An array of dependency ids.
-     */
-    public static function getDependencies(meta:ModMetadata):Array<String>
-    {
-        if (meta == null) return [];
-        
-        return [for (id in meta.dependencies.keys()) id];
-    }
+	/**
+	 * Gets a list of dependencies for a mod.
+	 * @param meta The mod metadata to check.
+	 * @return An array of dependency ids.
+	 */
+	public static function getDependencies(meta:ModMetadata):Array<String>
+	{
+		if (meta == null) return [];
 
-    /**
-     * Gets a list of missing dependencies for a mod.
-     * @param meta The mod metadata to check.
-     * @return An array of dependency ids.
-     */
-    public static function getMissingDependencies(meta:ModMetadata):Array<String>
-    {
-        if (meta == null) return [];
+		return[for (id in meta.dependencies.keys()) id];
+	}
 
-        return getDependencies(meta).filter(id -> return HeapsMod.getModVersion(id) != meta.dependencies.get(id));
-    }
+	/**
+	 * Gets a list of missing dependencies for a mod.
+	 * @param meta The mod metadata to check.
+	 * @return An array of dependency ids.
+	 */
+	public static function getMissingDependencies(meta:ModMetadata):Array<String>
+	{
+		if (meta == null) return [];
 
-    /**
-     * Sorts an array of mod metadata by dependencies.
-     * @param mods A list of mods to sort.
-     * @return A sorted list of the mods.
-     */
-    public static function sortByDependencies(mods:Array<ModMetadata>):Array<ModMetadata>
-    {
-        var result:Array<ModMetadata> = [];
-        var checked:Array<String> = [];
+		return getDependencies(meta).filter(id -> return HeapsMod.getModVersion(id) != meta.dependencies.get(id));
+	}
 
-        function add(id:String)
-        {
-            var meta:ModMetadata = mods.find(mod -> return mod.id == id);
+	/**
+	 * Sorts an array of mod metadata by dependencies.
+	 * @param mods A list of mods to sort.
+	 * @return A sorted list of the mods.
+	 */
+	public static function sortByDependencies(mods:Array<ModMetadata>):Array<ModMetadata>
+	{
+		var result:Array<ModMetadata> = [];
+		var checked:Array<String> = [];
 
-            if (meta == null || result.contains(meta)) return;
+		function add(id:String)
+		{
+			var meta:ModMetadata = mods.find(mod -> return mod.id == id);
 
-            checked.push(id);
+			if (meta == null || result.contains(meta)) return;
 
-            if (!HeapsMod.config.skipDependencies)
-            {
-                for (id in getDependencies(meta))
-                {
-                    var skipErrors:Bool = HeapsMod.config.skipDependencyErrors;
+			checked.push(id);
 
-                    if (id == meta.id)
-                    {
-                        HeapsMod.error(skipErrors ? WARNING : ERROR, MOD_DEPENDENCY_ERROR, 'Mod ${meta.id} cannot depend on itself');
+			if (!HeapsMod.config.skipDependencies)
+			{
+				for (id in getDependencies(meta))
+				{
+					var skipErrors:Bool = HeapsMod.config.skipDependencyErrors;
 
-                        if (skipErrors) continue;
-                        
-                        return;
-                    }
+					if (id == meta.id)
+					{
+						HeapsMod.error(skipErrors ? WARNING : ERROR, MOD_DEPENDENCY_ERROR, 'Mod ${meta.id} cannot depend on itself');
 
-                    if (checked.contains(id))
-                    {
-                        HeapsMod.error(skipErrors ? WARNING : ERROR, MOD_DEPENDENCY_ERROR, 'Mods cannot depend on each other');
+						if (skipErrors) continue;
 
-                        if (skipErrors) continue;
+						return;
+					}
 
-                        return;
-                    }
+					if (checked.contains(id))
+					{
+						HeapsMod.error(skipErrors ? WARNING : ERROR, MOD_DEPENDENCY_ERROR, 'Mods cannot depend on each other');
 
-                    add(id);
-                }
-            }
+						if (skipErrors) continue;
 
-            result.push(meta);
-        }
+						return;
+					}
 
-        for (mod in mods) add(mod.id);
+					add(id);
+				}
+			}
 
-        return result;
-    }
+			result.push(meta);
+		}
+
+		for (mod in mods) add(mod.id);
+
+		return result;
+	}
 }

@@ -8,7 +8,6 @@ import heapsmod.util.ModUtil;
 import heapsmod.HeapsModError;
 import hxd.res.Loader;
 import hxd.Res;
-
 #if hxscript
 import heapsmod.script.HeapsScript;
 #end
@@ -20,273 +19,273 @@ using Lambda;
  */
 class HeapsMod
 {
-    /**
-     * The default directory where mods are stored.
-     */
-    static final DEFAULT_MOD_ROOT:String = 'mods';
+	/**
+	 * The default directory where mods are stored.
+	 */
+	static final DEFAULT_MOD_ROOT:String = 'mods';
 
-    /**
-     * The default file name for mod metadata.
-     */
-    static final DEFAULT_META_FILE:String = 'meta.json';
+	/**
+	 * The default file name for mod metadata.
+	 */
+	static final DEFAULT_META_FILE:String = 'meta.json';
 
-    /**
-     * The default file name for mod icons.
-     */
-    static final DEFAULT_ICON_FILE:String = 'icon.png';
+	/**
+	 * The default file name for mod icons.
+	 */
+	static final DEFAULT_ICON_FILE:String = 'icon.png';
 
-    /**
-     * An array of default file paths that are ignored by mod filesystems.
-     */
-    static final DEFAULT_IGNORED:Array<String> = ['.vscode', '.git', '.gitattributes', '.gitignore'];
-    
-    #if hxscript
-    /**
-     * An array of default file extensions to use for checking scripts.
-     */
-    static final DEFAULT_SCRIPT_EXTS:Array<String> = ['hxc'];
-    #end
+	/**
+	 * An array of default file paths that are ignored by mod filesystems.
+	 */
+	static final DEFAULT_IGNORED:Array<String> = ['.vscode', '.git', '.gitattributes', '.gitignore'];
 
-    /**
-     * Whether HeapsMod had been initialized or not.
-     */
-    public static var initialized(default, null):Bool;
+	#if hxscript
+	/**
+	 * An array of default file extensions to use for checking scripts.
+	 */
+	static final DEFAULT_SCRIPT_EXTS:Array<String> = ['hxc'];
+	#end
 
-    /**
-     * Configuration data for HeapsMod.
-     */
-    public static var config(default, null):ConfigData;
+	/**
+	 * Whether HeapsMod had been initialized or not.
+	 */
+	public static var initialized(default, null):Bool;
 
-    static var onError(default, null):HeapsModError->Void;
-    static var mods(default, null):Array<Mod>;
+	/**
+	 * Configuration data for HeapsMod.
+	 */
+	public static var config(default, null):ConfigData;
 
-    /**
-     * Initializes the HeapsMod modding system.
-     * @param config Configuration data.
-     */
-    public static function init(?config:ConfigData)
-    {
-        if (initialized) return;
+	static var onError(default, null):HeapsModError->Void;
+	static var mods(default, null):Array<Mod>;
 
-        initialized = true;
+	/**
+	 * Initializes the HeapsMod modding system.
+	 * @param config Configuration data.
+	 */
+	public static function init(?config:ConfigData)
+	{
+		if (initialized) return;
 
-        // Loads the config
-        config ??= {};
-        config.modRoot ??= DEFAULT_MOD_ROOT;
-        config.metaFile ??= DEFAULT_META_FILE;
-        config.iconFile ??= DEFAULT_ICON_FILE;
-        config.skipDependencies ??= false;
-        config.skipDependencyErrors ??= false;
-        config.ignored ??= DEFAULT_IGNORED;
-        config.compat ??= [];
-        config.mods ??= [];
+		initialized = true;
 
-        #if hxscript
-        config.scriptExts ??= DEFAULT_SCRIPT_EXTS;
-        config.modPreprocessors ??= true;
-        #end
+		// Loads the config
+		config ??= {};
+		config.modRoot ??= DEFAULT_MOD_ROOT;
+		config.metaFile ??= DEFAULT_META_FILE;
+		config.iconFile ??= DEFAULT_ICON_FILE;
+		config.skipDependencies ??= false;
+		config.skipDependencyErrors ??= false;
+		config.ignored ??= DEFAULT_IGNORED;
+		config.compat ??= [];
+		config.mods ??= [];
 
-        onError = config.onError;
-        mods = [];
+		#if hxscript
+		config.scriptExts ??= DEFAULT_SCRIPT_EXTS;
+		config.modPreprocessors ??= true;
+		#end
 
-        HeapsMod.config = config;
+		onError = config.onError;
+		mods = [];
 
-        // Loads a new resource loader
-        Res.loader = new Loader(new HeapsModFS(Res.loader.fs));
+		HeapsMod.config = config;
 
-        error(INFO, HEAPSMOD_INITIALIZED, 'HeapsMod initialized');
+		// Loads a new resource loader
+		Res.loader = new Loader(new HeapsModFS(Res.loader.fs));
 
-        enableMods(config.mods);
-    }
+		error(INFO, HEAPSMOD_INITIALIZED, 'HeapsMod initialized');
 
-    /**
-     * Enables a mod.
-     * @param mod The mod folder to enable.
-     */
-    public static function enableMod(mod:String)
-    {
-        enableMods([mod]);
-    }
+		enableMods(config.mods);
+	}
 
-    /**
-     * Disables a mod.
-     * @param mod The mod folder to disable.
-     */
-    public static function disableMod(mod:String)
-    {
-        disableMods([mod]);
-    }
+	/**
+	 * Enables a mod.
+	 * @param mod The mod folder to enable.
+	 */
+	public static function enableMod(mod:String)
+	{
+		enableMods([mod]);
+	}
 
-    /**
-     * Like `enableMod`, but instead loads multiple mods.
-     * @param mods The mod folders to enable.
-     */
-    public static function enableMods(mods:Array<String>)
-    {
-        if (!initialized) return;
-        
-        for (mod in mods)
-        {
-            var meta:ModMetadata = ModUtil.getMeta(mod);
+	/**
+	 * Disables a mod.
+	 * @param mod The mod folder to disable.
+	 */
+	public static function disableMod(mod:String)
+	{
+		disableMods([mod]);
+	}
 
-            if (!ModUtil.isCompatible(meta)) continue;
+	/**
+	 * Like `enableMod`, but instead loads multiple mods.
+	 * @param mods The mod folders to enable.
+	 */
+	public static function enableMods(mods:Array<String>)
+	{
+		if (!initialized) return;
 
-            // Missing dependency check
-            var missing:Array<String> = DependencyUtil.getMissingDependencies(meta);
+		for (mod in mods)
+		{
+			var meta:ModMetadata = ModUtil.getMeta(mod);
 
-            if (missing.length > 0 && !config.skipDependencies)
-            {
-                var skipErrors:Bool = config.skipDependencyErrors;
+			if (!ModUtil.isCompatible(meta)) continue;
 
-                error(skipErrors ? WARNING : ERROR, MOD_MISSING_DEPENDENCIES, 'Mod $mod has missing dependencies: $missing');
+			// Missing dependency check
+			var missing:Array<String> = DependencyUtil.getMissingDependencies(meta);
 
-                if (!skipErrors) continue;
-            }
+			if (missing.length > 0 && !config.skipDependencies)
+			{
+				var skipErrors:Bool = config.skipDependencyErrors;
 
-            if (isModEnabled(mod)) continue;
+				error(skipErrors ? WARNING : ERROR, MOD_MISSING_DEPENDENCIES, 'Mod $mod has missing dependencies: $missing');
 
-            HeapsMod.mods.push(new Mod(meta));
+				if (!skipErrors) continue;
+			}
 
-            error(INFO, MOD_ENABLED, 'Enabled mod $mod');
-        }
+			if (isModEnabled(mod)) continue;
 
-        #if hxscript
-        HeapsScript.loadScripts();
-        #end
-    }
+			HeapsMod.mods.push(new Mod(meta));
 
-    /**
-     * Like `disableMod`, but instead disables multiple mods.
-     * @param mods The mod folders to disable.
-     */
-    public static function disableMods(mods:Array<String>)
-    {
-        if (!initialized) return;
+			error(INFO, MOD_ENABLED, 'Enabled mod $mod');
+		}
 
-        for (mod in mods)
-        {
-            var mod:Mod = getMod(mod);
-            mod.dispose();
+		#if hxscript
+		HeapsScript.loadScripts();
+		#end
+	}
 
-            HeapsMod.mods.remove(mod);
+	/**
+	 * Like `disableMod`, but instead disables multiple mods.
+	 * @param mods The mod folders to disable.
+	 */
+	public static function disableMods(mods:Array<String>)
+	{
+		if (!initialized) return;
 
-            error(INFO, MOD_DISABLED, 'Disabled mod $mod');
-        }
+		for (mod in mods)
+		{
+			var mod:Mod = getMod(mod);
+			mod.dispose();
 
-        enableMods(getEnabledMods().map(mod -> return mod.dir));
-    }
+			HeapsMod.mods.remove(mod);
 
-    /**
-     * Scans the mod root for mod metadata.
-     * @return An array of mod metadata.
-     */
-    public static function scan():Array<ModMetadata>
-    {
-        if (!initialized) return [];
+			error(INFO, MOD_DISABLED, 'Disabled mod $mod');
+		}
 
-        var result:Array<ModMetadata> = [];
+		enableMods(getEnabledMods().map(mod -> return mod.dir));
+	}
 
-        for (mod in HeapsModFS.modFS.dir(''))
-        {
-            var meta:ModMetadata = ModUtil.getMeta(mod.name, true);
+	/**
+	 * Scans the mod root for mod metadata.
+	 * @return An array of mod metadata.
+	 */
+	public static function scan():Array<ModMetadata>
+	{
+		if (!initialized) return [];
 
-            if (meta == null) continue;
-            
-            result.push(meta);
-        }
+		var result:Array<ModMetadata> = [];
 
-        return DependencyUtil.sortByDependencies(result);
-    }
+		for (mod in HeapsModFS.modFS.dir(''))
+		{
+			var meta:ModMetadata = ModUtil.getMeta(mod.name, true);
 
-    /**
-     * @return A list of all currently enabled mods.
-     */
-    public static function getEnabledMods():Array<Mod>
-    {
-        if (!initialized) return [];
+			if (meta == null) continue;
 
-        return mods.copy();
-    }
+			result.push(meta);
+		}
 
-    /**
-     * Gets the instance of an enabled mod.
-     * @param id The mod id.
-     * @return The mod instance.
-     */
-    public static function getMod(id:String):Mod
-    {
-        if (!initialized) return null;
+		return DependencyUtil.sortByDependencies(result);
+	}
 
-        return getEnabledMods().find(m -> return m.dir == id || m.id == id);
-    }
+	/**
+	 * @return A list of all currently enabled mods.
+	 */
+	public static function getEnabledMods():Array<Mod>
+	{
+		if (!initialized) return [];
 
-    /**
-     * Retrieves the version of an enabled mod.
-     * @param id The mod id.
-     * @return The mod version.
-     */
-    public static function getModVersion(id:String):Null<Int>
-    {
-        if (!initialized) return null;
+		return mods.copy();
+	}
 
-        return getMod(id)?.version;
-    }
+	/**
+	 * Gets the instance of an enabled mod.
+	 * @param id The mod id.
+	 * @return The mod instance.
+	 */
+	public static function getMod(id:String):Mod
+	{
+		if (!initialized) return null;
 
-    /**
-     * Whether or not a mod is enabled.
-     * @param id The mod id.
-     */
-    public static function isModEnabled(id:String):Bool
-    {
-        if (!initialized) return false;
+		return getEnabledMods().find(m -> return m.dir == id || m.id == id);
+	}
 
-        return getMod(id) != null;
-    }
+	/**
+	 * Retrieves the version of an enabled mod.
+	 * @param id The mod id.
+	 * @return The mod version.
+	 */
+	public static function getModVersion(id:String):Null<Int>
+	{
+		if (!initialized) return null;
 
-    /**
-     * Fully disables the HeapsMod modding system.
-     */
-    public static function disable()
-    {
-        if (!initialized) return;
+		return getMod(id)?.version;
+	}
 
-        error(INFO, HEAPSMOD_DISABLED, 'HeapsMod disabled');
+	/**
+	 * Whether or not a mod is enabled.
+	 * @param id The mod id.
+	 */
+	public static function isModEnabled(id:String):Bool
+	{
+		if (!initialized) return false;
 
-        for (mod in mods) mod.dispose();
+		return getMod(id) != null;
+	}
 
-        #if hxscript
-        HeapsScript.clearScripts();
-        #end
-        
-        HeapsModFS.instance.dispose();
-        
-        config = null;
-        onError = null;
-        mods = null;
+	/**
+	 * Fully disables the HeapsMod modding system.
+	 */
+	public static function disable()
+	{
+		if (!initialized) return;
 
-        initialized = false;
-    }
+		error(INFO, HEAPSMOD_DISABLED, 'HeapsMod disabled');
 
-    /**
-     * Builds an error and runs the `onError` callback.
-     * @param code The error code (`INFO`, `WARNING`, `ERROR`).
-     * @param type The error type.
-     * @param message An error message string.
-     */
-    public static function error(code:ErrorCode, type:ErrorType, message:String)
-    {
-        if (onError != null) onError(HeapsModError.get(code, type, message));
-    }
+		for (mod in mods) mod.dispose();
 
-    /**
-     * Clears the cache of every mod filesystem + the HeapsMod filesystem.
-     */
-    public static function clearCache()
-    {
-        if (!initialized) return;
+		#if hxscript
+		HeapsScript.clearScripts();
+		#end
 
-        for (mod in mods) mod.clearCache();
+		HeapsModFS.instance.dispose();
 
-        HeapsModFS.modFS.clearCache();
-    }
+		config = null;
+		onError = null;
+		mods = null;
+
+		initialized = false;
+	}
+
+	/**
+	 * Builds an error and runs the `onError` callback.
+	 * @param code The error code (`INFO`, `WARNING`, `ERROR`).
+	 * @param type The error type.
+	 * @param message An error message string.
+	 */
+	public static function error(code:ErrorCode, type:ErrorType, message:String)
+	{
+		if (onError != null) onError(HeapsModError.get(code, type, message));
+	}
+
+	/**
+	 * Clears the cache of every mod filesystem + the HeapsMod filesystem.
+	 */
+	public static function clearCache()
+	{
+		if (!initialized) return;
+
+		for (mod in mods) mod.clearCache();
+
+		HeapsModFS.modFS.clearCache();
+	}
 }

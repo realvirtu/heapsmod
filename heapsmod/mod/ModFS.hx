@@ -11,42 +11,42 @@ using Lambda;
  */
 class ModFS extends LocalFileSystem
 {
-    /**
-     * The mod instance.
-     */
-    public var mod(default, null):Mod;
+	/**
+	 * The mod instance.
+	 */
+	public var mod(default, null):Mod;
 
-    public function new(mod:Mod)
-    {
-        super(Path.join([HeapsMod.config.modRoot, mod.dir]), null);
+	public function new(mod:Mod)
+	{
+		super(Path.join([HeapsMod.config.modRoot, mod.dir]), null);
 
-        this.mod = mod;
-    }
+		this.mod = mod;
+	}
 
-    override function open(path:String, check:Bool = true):LocalEntry
-    {
-        if (path.startsWith('/')) path = path.substr(1);
+	override function open(path:String, check:Bool = true):LocalEntry
+	{
+		if (path.startsWith('/')) path = path.substr(1);
 
-        // Skip ignored paths
-        if (HeapsMod.config.ignored.exists(ignore -> return path.startsWith(ignore))) return null;
+		// Skip ignored paths
+		if (HeapsMod.config.ignored.exists(ignore -> return path.startsWith(ignore))) return null;
 
-        var entry:LocalEntry = super.open(path, check);
+		var entry:LocalEntry = super.open(path, check);
 
-        if (entry != null) return entry;
+		if (entry != null) return entry;
 
-        // Check if the path can be converted for backwards compatibility
-        for (oldPath => newPath in HeapsMod.config.compat)
-        {
-            if (path.startsWith(newPath))
-            {
-                entry = super.open(oldPath + path.substr(newPath.length), check);
+		// Check if the path can be converted for backwards compatibility
+		for (oldPath => newPath in HeapsMod.config.compat)
+		{
+			if (path.startsWith(newPath))
+			{
+				entry = super.open(oldPath + path.substr(newPath.length), check);
 
-                if (entry != null) break;
-            }
-        }
+				if (entry != null) break;
+			}
+		}
 
-        if (entry != null) HeapsMod.error(INFO, COMPAT_CONVERT_PATH, 'Converted path ${entry.path} -> $path');
+		if (entry != null) HeapsMod.error(INFO, COMPAT_CONVERT_PATH, 'Converted path ${entry.path} -> $path');
 
-        return entry;
-    }
+		return entry;
+	}
 }

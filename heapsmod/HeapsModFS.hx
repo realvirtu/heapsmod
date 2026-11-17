@@ -14,60 +14,63 @@ using Lambda;
  */
 class HeapsModFS extends MultiFileSystem
 {
-    /**
-     * The `HeapsModFS` instance.
-     */
-    public static var instance:HeapsModFS;
-    
-    /**
-     * A local filesystem used for mods.
-     */
-    public static var modFS:LocalFileSystem;
+	/**
+	 * The `HeapsModFS` instance.
+	 */
+	public static var instance:HeapsModFS;
 
-    /**
-     * The original filesystem used.
-     */
-    public static var baseFS:FileSystem;
+	/**
+	 * A local filesystem used for mods.
+	 */
+	public static var modFS:LocalFileSystem;
 
-    public function new(fs:FileSystem)
-    {
-        instance = this;
+	/**
+	 * The original filesystem used.
+	 */
+	public static var baseFS:FileSystem;
 
-        modFS = new LocalFileSystem(HeapsMod.config.modRoot, null);
-        baseFS = fs;
+	public function new(fs:FileSystem)
+	{
+		instance = this;
 
-        super([baseFS]);
-    }
+		modFS = new LocalFileSystem(HeapsMod.config.modRoot, null);
+		baseFS = fs;
 
-    override function dir(path:String):Array<FileEntry>
-    {
-        var result:Array<FileEntry> = [];
+		super([baseFS]);
+	}
 
-        for (fs in fs)
-        {
-            for (entry in try fs.dir(path) catch (e) [])
-            {
-                if (result.exists(file -> return file.path == entry.path)) continue;
+	override function dir(path:String):Array<FileEntry>
+	{
+		var result:Array<FileEntry> = [];
 
-                result.push(entry);
-            }
-        }
+		for (fs in fs)
+		{
+			for (entry in try
+				fs.dir(path)
+			catch (e)
+				[])
+			{
+				if (result.exists(file -> return file.path == entry.path)) continue;
 
-        return result;
-    }
+				result.push(entry);
+			}
+		}
 
-    override function dispose()
-    {
-        Res.loader = new Loader(baseFS);
-        
-        fs.remove(baseFS);
-        
-        modFS.dispose();
-        
-        modFS = null;
-        baseFS = null;
-        instance = null;
+		return result;
+	}
 
-        super.dispose();
-    }
+	override function dispose()
+	{
+		Res.loader = new Loader(baseFS);
+
+		fs.remove(baseFS);
+
+		modFS.dispose();
+
+		modFS = null;
+		baseFS = null;
+		instance = null;
+
+		super.dispose();
+	}
 }
