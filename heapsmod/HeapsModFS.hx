@@ -33,7 +33,7 @@ class HeapsModFS extends MultiFileSystem
 	{
 		instance = this;
 
-		modFS = new LocalFileSystem(HeapsMod.config.modRoot, null);
+		modFS = try new LocalFileSystem(HeapsMod.config.modRoot, null) catch (e) null;
 		baseFS = fs;
 
 		super([baseFS]);
@@ -65,7 +65,7 @@ class HeapsModFS extends MultiFileSystem
 
 		fs.remove(baseFS);
 
-		modFS.dispose();
+		modFS?.dispose();
 
 		modFS = null;
 		baseFS = null;

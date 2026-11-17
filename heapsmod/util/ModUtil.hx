@@ -25,7 +25,7 @@ class ModUtil
 		var meta:ModMetadata = {};
 
 		// Don't parse metadata if it doesn't exist
-		if (!HeapsModFS.modFS.exists(path))
+		if (!HeapsModFS.modFS?.exists(path))
 		{
 			HeapsMod.error(WARNING, MOD_MISSING_META, 'Mod $mod is missing metadata');
 
@@ -36,7 +36,7 @@ class ModUtil
 		// If it fails to parse, output an error
 		try
 		{
-			var json:Dynamic = Json.parse(HeapsModFS.modFS.get(path).getText());
+			var json:Dynamic = Json.parse(HeapsModFS.modFS?.get(path).getText());
 
 			meta.title = JsonUtil.getString('title', json);
 			meta.description = JsonUtil.getString('description', json);
@@ -74,12 +74,7 @@ class ModUtil
 		if (!HeapsMod.initialized) return null;
 
 		var path:String = Path.join([mod, HeapsMod.config.iconFile]);
-		var tile:Tile = try
-		{
-			new Image(HeapsModFS.modFS.get(path)).toTile();
-		}
-		catch (e)
-			null;
+		var tile:Tile = try new Image(HeapsModFS.modFS?.get(path)).toTile() catch (e) null;
 
 		if (tile == null) HeapsMod.error(WARNING, MOD_MISSING_ICON, 'Mod $mod lacks an icon');
 

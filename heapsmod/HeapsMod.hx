@@ -181,7 +181,7 @@ class HeapsMod
 	 */
 	public static function scan():Array<ModMetadata>
 	{
-		if (!initialized) return [];
+		if (!initialized || HeapsModFS.modFS == null) return [];
 
 		var result:Array<ModMetadata> = [];
 
@@ -286,6 +286,6 @@ class HeapsMod
 
 		for (mod in mods) mod.clearCache();
 
-		HeapsModFS.modFS.clearCache();
+		HeapsModFS.modFS?.clearCache();
 	}
 }
