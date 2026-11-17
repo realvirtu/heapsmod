@@ -42,16 +42,16 @@ import heapsmod.script.HeapsScript;
 
 HeapsScript.setGlobalImport("package.Class");
 
-HeapsScript.blacklistClass("dangerous.package.DangerousClass");
-HeapsScript.blacklistPackage("dangerous.package");
+HeapsScript.blacklistClass("bad.package.DangerousClass");
+HeapsScript.blacklistPackage("bad.package");
 
 // Should be done after loading mods
 
 // Outputs all scripted classes
 trace(HeapsScript.listClasses());
 
-// Outputs all scripted classes that extend MyClass
-trace(HeapsScript.listClasses(MyClass));
+// Outputs all scripted classes that extend DummyClass
+trace(HeapsScript.listClasses(DummyClass));
 ```
 
 ### Scripted Classes
