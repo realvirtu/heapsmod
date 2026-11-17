@@ -26,7 +26,30 @@ for (meta in HeapsMod.scan())
 }
 ```
 
+### Mod Structure
+
+Mods are stored in a directory named `mods`. HeapsMod doesn't automatically create this directory.
+
+Mods require a `meta.json` file for HeapsMod to load it. Mod metadata is structured like this:
+
+```json
+{
+    "title": "My Mod",
+    "description": "My description",
+    "id": "mymod",
+    "version": 1,
+    "apiVersion": 1,
+    "dependencies": {
+        "modid": 1
+    }
+}
+```
+
+Mods can also have an `icon.png` file. However, mod icons are completely optional and are not required for mods to be loaded.
+
 ## Scripting (Optional)
+
+HeapsMod allows for scripting through `hxscript`, a haxelib for interpreting Haxe code at runtime. If you don't want mods to have script support, you can completely ignore this as HeapsMod doesn't require it.
 
 ### Installation
 
