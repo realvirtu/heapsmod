@@ -58,11 +58,6 @@ class HeapsModFS extends MultiFileSystem
 		return result;
 	}
 
-	override function delete(path:String):Bool
-	{
-		return baseFS.delete(path);
-	}
-
 	override function dispose()
 	{
 		Res.loader = new Loader(baseFS);
