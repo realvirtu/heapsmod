@@ -45,10 +45,9 @@ class HeapsModFS extends MultiFileSystem
 
 		for (fs in fs)
 		{
-			for (entry in try
-				fs.dir(path)
-			catch (e)
-				[])
+			var entries:Array<FileEntry> = try fs.dir(path) catch (e) [];
+
+			for (entry in entries)
 			{
 				if (result.exists(file -> return file.path == entry.path)) continue;
 
@@ -57,6 +56,11 @@ class HeapsModFS extends MultiFileSystem
 		}
 
 		return result;
+	}
+
+	override function delete(path:String):Bool
+	{
+		return baseFS.delete(path);
 	}
 
 	override function dispose()
