@@ -1,5 +1,6 @@
 package heapsmod.parse;
 
+import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileSystem;
 import haxe.io.Bytes;
 import haxe.io.Path;
@@ -77,21 +78,6 @@ class TxtParseRule extends ParseRule
 			result += '\n';
 		}
 
-		return new ParseFileEntry(Bytes.ofString(result.trim()));
-	}
-}
-
-private class ParseFileEntry extends FileEntry
-{
-	var bytes:Bytes;
-
-	public function new(bytes:Bytes)
-	{
-		this.bytes = bytes;
-	}
-
-	override function getBytes():Bytes
-	{
-		return bytes;
+		return new BytesFileEntry(entries[0].path, Bytes.ofString(result.trim()));
 	}
 }
