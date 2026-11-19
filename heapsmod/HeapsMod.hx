@@ -1,5 +1,6 @@
 package heapsmod;
 
+import heapsmod.parse.ParseRule;
 import heapsmod.data.ConfigData;
 import heapsmod.data.ModMetadata;
 import heapsmod.mod.Mod;
@@ -39,6 +40,16 @@ class HeapsMod
 	 */
 	static final DEFAULT_IGNORED:Array<String> = ['.vscode', '.git', '.gitattributes', '.gitignore'];
 
+	/**
+	 * The default parse rules for combining text files.
+	 */
+	static final DEFAULT_PARSE_RULES:Map<String, ParseRule> = ['txt' => new TxtParseRule()];
+
+	/**
+	 * The default text file parse directory.
+	 */
+	static final DEFAULT_PARSE_DIR:String = 'merge';
+
 	#if hxscript
 	/**
 	 * An array of default file extensions to use for checking scripts.
@@ -77,6 +88,8 @@ class HeapsMod
 		config.skipDependencies ??= false;
 		config.skipDependencyErrors ??= false;
 		config.ignored ??= DEFAULT_IGNORED;
+		config.parseRules ??= DEFAULT_PARSE_RULES;
+		config.parseDir ??= DEFAULT_PARSE_DIR;
 		config.compat ??= [];
 		config.mods ??= [];
 
@@ -89,6 +102,10 @@ class HeapsMod
 		mods = [];
 
 		HeapsMod.config = config;
+
+		// Maps file extensions to parse rules
+		// Parse rules allow for merging modded text files into a singular file
+		for (ext => rule in config.parseRules) ParseRule.rules.set(ext, rule);
 
 		// Loads a new resource loader
 		Res.loader = new Loader(new HeapsModFS(Res.loader.fs));
