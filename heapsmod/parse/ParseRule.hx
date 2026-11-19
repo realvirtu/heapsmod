@@ -1,12 +1,8 @@
 package heapsmod.parse;
 
-import hxd.fs.BytesFileSystem.BytesFileEntry;
-import hxd.fs.FileSystem;
-import haxe.io.Bytes;
 import haxe.io.Path;
 import hxd.fs.FileEntry;
-
-using StringTools;
+import hxd.fs.FileSystem;
 
 /**
  * A class for parsing and combining multiple text files.
@@ -33,19 +29,18 @@ class ParseRule
 	/**
 	 * Parses `base` into a merged `FileEntry`.
 	 */
-	public static function parse(base:FileEntry):FileEntry
+	public static function parse(path:String, entry:FileEntry):FileEntry
 	{
-		if (!HeapsMod.initialized) return base;
+		if (!HeapsMod.initialized) return entry;
 
-		var path:String = base.path;
 		var ext:String = path.substr(path.lastIndexOf('.') + 1);
 
-		if (!HeapsModFS.baseFS.exists(path) || !rules.exists(ext)) return base;
+		if (!HeapsModFS.baseFS.exists(path) || !rules.exists(ext)) return entry;
 
 		var entries:Array<FileEntry> = [];
 		var fs:Array<FileSystem> = HeapsModFS.instance.fs;
 
-		entries.push(base);
+		entries.push(entry);
 
 		for (i in 0...fs.length)
 		{
@@ -60,24 +55,5 @@ class ParseRule
 		var result:FileEntry = rules.get(ext).get(entries);
 
 		return result;
-	}
-}
-
-/**
- * `ParseRule` class for `.txt` files.
- */
-class TxtParseRule extends ParseRule
-{
-	override function get(entries:Array<FileEntry>):FileEntry
-	{
-		var result:String = '';
-
-		for (entry in entries)
-		{
-			result += entry.getText();
-			result += '\n';
-		}
-
-		return new BytesFileEntry(entries[0].path, Bytes.ofString(result.trim()));
 	}
 }

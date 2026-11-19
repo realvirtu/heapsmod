@@ -42,7 +42,7 @@ class HeapsModFS extends MultiFileSystem
 
 	override function get(path:String):FileEntry
 	{
-		return ParseRule.parse(super.get(path));
+		return ParseRule.parse(path, super.get(path));
 	}
 
 	override function dir(path:String):Array<FileEntry>

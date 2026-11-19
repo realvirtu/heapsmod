@@ -1,6 +1,7 @@
 package heapsmod;
 
 import heapsmod.parse.ParseRule;
+import heapsmod.parse.TxtParseRule;
 import heapsmod.data.ConfigData;
 import heapsmod.data.ModMetadata;
 import heapsmod.mod.Mod;
