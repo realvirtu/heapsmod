@@ -1,7 +1,7 @@
 package heapsmod;
 
 import heapsmod.format.ParseFormat;
-import heapsmod.format.TxtParseFormat;
+import heapsmod.format.TextParseFormat;
 import heapsmod.data.ConfigData;
 import heapsmod.data.ModMetadata;
 import heapsmod.mod.Mod;
@@ -44,7 +44,7 @@ class HeapsMod
 	/**
 	 * The default parse formats for text files.
 	 */
-	static final DEFAULT_PARSE_FORMATS:Map<String, ParseFormat> = ['txt' => new TxtParseFormat()];
+	static final DEFAULT_PARSE_FORMATS:Map<String, ParseFormat> = ['txt' => new TextParseFormat()];
 
 	/**
 	 * The default text file parse directory.
@@ -88,14 +88,14 @@ class HeapsMod
 		config.iconFile ??= DEFAULT_ICON_FILE;
 		config.skipDependencies ??= false;
 		config.skipDependencyErrors ??= false;
-		config.ignored ??= DEFAULT_IGNORED;
-		config.parseFormats ??= DEFAULT_PARSE_FORMATS;
+		config.ignored ??= DEFAULT_IGNORED.copy();
+		config.parseFormats ??= DEFAULT_PARSE_FORMATS.copy();
 		config.parseDir ??= DEFAULT_PARSE_DIR;
 		config.compat ??= [];
 		config.mods ??= [];
 
 		#if hxscript
-		config.scriptExts ??= DEFAULT_SCRIPT_EXTS;
+		config.scriptExts ??= DEFAULT_SCRIPT_EXTS.copy();
 		config.modPreprocessors ??= true;
 		#end
 
@@ -103,10 +103,6 @@ class HeapsMod
 		mods = [];
 
 		HeapsMod.config = config;
-
-		// Maps file extensions to parse rules
-		// Parse rules allow for merging modded text files into a singular file
-		for (ext => rule in config.parseFormats) ParseFormat.formats.set(ext, rule);
 
 		// Loads a new resource loader
 		Res.loader = new Loader(new HeapsModFS(Res.loader.fs));
