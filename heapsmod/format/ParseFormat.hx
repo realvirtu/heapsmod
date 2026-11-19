@@ -46,7 +46,7 @@ class ParseFormat
 			files.push(fs.get(path));
 		}
 
-		HeapsMod.error(INFO, PARSE_FORMAT, 'Applied parse format to file $path');
+		if (files.length > 0) HeapsMod.error(INFO, PARSE_FORMAT, 'Applied parse format to file $path');
 
 		return formats.get(ext).get(entry, files);
 	}
