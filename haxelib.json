@@ -3,8 +3,8 @@
     "url": "https://github.com/realvirtu/heapsmod",
     "license": "MIT",
     "description": "Modding framework for the Heaps game engine",
-    "version": "1.0.0",
-    "releasenote": "Initial release.",
+    "version": "1.1.0",
+    "releasenote": "",
     "contributors": ["virtu"],
     "dependencies": { "heaps": "" }
 }
