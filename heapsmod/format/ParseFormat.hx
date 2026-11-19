@@ -46,6 +46,8 @@ class ParseFormat
 			files.push(fs.get(path));
 		}
 
+		HeapsMod.error(INFO, PARSE_FORMAT, 'Running parse format for file $path');
+
 		return formats.get(ext).get(entry, files);
 	}
 }
