@@ -1,4 +1,4 @@
-package heapsmod.parse;
+package heapsmod.format;
 
 import haxe.io.Bytes;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
@@ -9,7 +9,7 @@ using StringTools;
 /**
  * `ParseRule` class for `.txt` files.
  */
-class TxtParseRule extends ParseRule
+class TxtParseFormat extends ParseFormat
 {
 	override function get(entries:Array<FileEntry>):FileEntry
 	{

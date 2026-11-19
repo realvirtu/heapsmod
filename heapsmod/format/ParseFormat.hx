@@ -1,4 +1,4 @@
-package heapsmod.parse;
+package heapsmod.format;
 
 import haxe.io.Path;
 import hxd.fs.FileEntry;
@@ -7,19 +7,19 @@ import hxd.fs.FileSystem;
 /**
  * A class for parsing and combining multiple text files.
  */
-class ParseRule
+class ParseFormat
 {
 	/**
-	 * The file extensions associated with parse rules.
+	 * A map of file extensions and their associated parse formats.
 	 */
-	public static var rules(default, null):Map<String, ParseRule> = new Map<String, ParseRule>();
+	public static var formats(default, null):Map<String, ParseFormat> = new Map<String, ParseFormat>();
 
 	public function new()
 	{
 	}
 
 	/**
-	 * Gets a combined file entry from `entries`.
+	 * Gets a formatted file entry from `entries`.
 	 */
 	public function get(entries:Array<FileEntry>):FileEntry
 	{
@@ -27,7 +27,7 @@ class ParseRule
 	}
 
 	/**
-	 * Parses `base` into a merged `FileEntry`.
+	 * Parses `base` into the format associated with its file extension.
 	 */
 	public static function parse(path:String, entry:FileEntry):FileEntry
 	{
@@ -35,7 +35,7 @@ class ParseRule
 
 		var ext:String = path.substr(path.lastIndexOf('.') + 1);
 
-		if (!HeapsModFS.baseFS.exists(path) || !rules.exists(ext)) return entry;
+		if (!HeapsModFS.baseFS.exists(path) || !formats.exists(ext)) return entry;
 
 		var entries:Array<FileEntry> = [];
 		var fs:Array<FileSystem> = HeapsModFS.instance.fs;
@@ -52,7 +52,7 @@ class ParseRule
 			entries.push(fs.get(path));
 		}
 
-		var result:FileEntry = rules.get(ext).get(entries);
+		var result:FileEntry = formats.get(ext).get(entries);
 
 		return result;
 	}

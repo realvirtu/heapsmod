@@ -1,6 +1,6 @@
 package heapsmod.data;
 
-import heapsmod.parse.ParseRule;
+import heapsmod.format.ParseFormat;
 
 /**
  * Configuration data used when initializing HeapsMod.
@@ -62,10 +62,10 @@ typedef ConfigData =
 	var compat:Map<String, String>;
 
 	/**
-	 * A string map associating file extensions with parse rules for combining text files.
+	 * A string map of file extensions with their associated parse formats.
 	 */
 	@:optional
-	var parseRules:Map<String, ParseRule>;
+	var parseFormats:Map<String, ParseFormat>;
 
 	/**
 	 * The directory where text files are parsed.

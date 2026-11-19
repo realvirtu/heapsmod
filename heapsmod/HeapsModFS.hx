@@ -1,6 +1,6 @@
 package heapsmod;
 
-import heapsmod.parse.ParseRule;
+import heapsmod.format.ParseFormat;
 import hxd.fs.FileEntry;
 import hxd.fs.FileSystem;
 import hxd.fs.LocalFileSystem;
@@ -42,7 +42,7 @@ class HeapsModFS extends MultiFileSystem
 
 	override function get(path:String):FileEntry
 	{
-		return ParseRule.parse(path, super.get(path));
+		return ParseFormat.parse(path, super.get(path));
 	}
 
 	override function dir(path:String):Array<FileEntry>
