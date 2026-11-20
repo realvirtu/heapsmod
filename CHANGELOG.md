@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A parse format system allowing text files to be combined without fully overriding them.
+- A function for reloading the modding system.
+
+### Removed
+
+- `getModVersion()`. You can already get the mod version by using `getMod()`.
 
 ## [1.0.0] - 2026-11-18
 
