@@ -234,18 +234,6 @@ class HeapsMod
 	}
 
 	/**
-	 * Retrieves the version of an enabled mod.
-	 * @param id The mod id.
-	 * @return The mod version.
-	 */
-	public static function getModVersion(id:String):Null<Int>
-	{
-		if (!initialized) return null;
-
-		return getMod(id)?.version;
-	}
-
-	/**
 	 * Whether or not a mod is enabled.
 	 * @param id The mod id.
 	 */
