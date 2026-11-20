@@ -257,6 +257,22 @@ class HeapsMod
 	}
 
 	/**
+	 * Reloads the HeapsMod modding system.
+	 */
+	public static function reload()
+	{
+		if (!initialized) return;
+
+		var config:ConfigData = HeapsMod.config;
+		var mods:Array<String> = mods.map(mod -> return mod.dir);
+
+		HeapsMod.disable();
+		HeapsMod.init(config);
+
+		HeapsMod.enableMods(mods);
+	}
+
+	/**
 	 * Fully disables the HeapsMod modding system.
 	 */
 	public static function disable()
